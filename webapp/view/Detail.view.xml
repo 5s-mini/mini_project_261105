@@ -27,6 +27,18 @@
                     <m:Label text="별점"/>
                     <m:RatingIndicator value="{star}" maxValue="5" editable="false"/>
                 </m:VBox>
+
+                <!-- 별점과 가격을 더한 가성비 점수 -->
+                <m:VBox class="sapUiSmallMarginEnd">
+                    <m:Label text="가성비"/>
+                    <m:ProgressIndicator width="200px" showValue="true" 
+                        percentValue="{= Math.min(100, ${star} * 2 * 100000 / ${detail/0/price}) }"
+                        displayValue="{= Math.round(Math.min(100, ${star} * 2 * 100000 / ${detail/0/price})) }점"
+                        state="{= ${star} * 2 * 100000 / ${detail/0/price} >= 75 ? 'Success'
+                            : ${star} * 2 * 100000 / ${detail/0/price} >= 40 ? 'Warning' : 'Error' }"/>
+                </m:VBox>
+                <!-- 여기까지 -->
+
                 <m:VBox>
                     <m:Label text="재방문"/>
                     <m:Text text="{visit_again}"/>
