@@ -5,6 +5,7 @@ sap.ui.define([
 
   return BaseController.extend("project261105.controller.App", {
       onInit() {
+        this.oRouter.getRoute("detail").attachPatternMatched(this._onProductMatched, this);
       }
   });
 });
