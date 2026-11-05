@@ -63,8 +63,7 @@
       "visit_again": true,
       "image": "https://picsum.photos/200",
       "detail": [
-        { "menu": "간짜장", "price": 10000, "review": "구디의 중식당 1황 = 리옌 임
-		걍 중식먹을거면 리옌 가야함 여기가 젤 맛있음" }
+        { "menu": "간짜장", "price": 10000, "review": "구디의 중식당 1황 = 리옌 임. 중식먹을거면 리옌 가야함 여기가 젤 맛있음" }
       ]
     },
     {
@@ -92,7 +91,7 @@
     {
       "name": "짜장면",
       "store": "홍매",
-      "type": "중식, 면",
+      "type": "중식",
       "star": 4,
       "visit_again": true,
       "image": "https://picsum.photos/200",
