@@ -1,0 +1,225 @@
+{
+  "food": [
+    {
+      "name": "순대국밥",
+      "store": "평안도찹쌀순대 구로디지털점",
+      "type": "한식",
+      "star": 2,
+      "visit_again": false,
+      "image": "https://boom-money-cd7.notion.site/image/attachment%3A8c995647-4429-4bc1-aa9a-1ad2abc7daea%3AKakaoTalk_20251105_130205581_01.png.jpg?table=block&id=2a28e14b-e0e9-80b9-a4d1-c396277110f9&spaceId=5a1c3cf7-a074-435d-8db5-b73805c4e6cc&width=1280&userId=&cache=v2&imgBuildSrc=requestProxiedImageUrl",
+      "detail": [
+        { "menu": "순대국밥", "price": 9000, "review": "강사님이 맛있다고 극찬한 곳이래서 기대했는데 그냥 순대국밥 맛임. 난 야채있는 순대를 안좋아하는데 당근이 들어간 순대라 별로였음. 고기도 적은 느낌이 들음. 그냥 무난한 순대국밥 느낌? 맛집인지는 잘 모르겠다. 깍두기도 그냥 그렇다. 나쁘지도 않고 좋지도 않음. 자리는 엄청 많아서 다같이 먹기는 좋았다." }
+      ]
+    },
+    {
+      "name": "구내식당",
+      "store": "모르겠음",
+      "type": "한식",
+      "star": 2,
+      "visit_again": true,
+      "image": "https://boom-money-cd7.notion.site/image/attachment%3A9093ad42-2c98-4fcf-9866-8769666e754d%3AKakaoTalk_20251107_090320423_02.png.jpg?table=block&id=2a48e14b-e0e9-80aa-8b0e-d80445e8de34&spaceId=5a1c3cf7-a074-435d-8db5-b73805c4e6cc&width=1280&userId=&cache=v2&imgBuildSrc=requestProxiedImageUrl",
+      "detail": [
+        { "menu": "닭갈비, 알리오올리오, 샐러드, 콩나물국", "price": 6500, "review": "맛이 그렇게 막 맛있지는 않음. 특히 알리오올리오는 너무 별로였고 (영환님도 파스타가 너무 아쉽다고함) 닭갈비도 그렇게 맛있는지는 모르겠음. 콩나물국도 그냥 그럼. 그래도 6500원에 이렇게 밥 한 끼 먹는데에 의미를 두는 느낌. 위생은 나쁘지 않고 나중에 메뉴 맘에 들 때 한번 더 갈까 싶은 생각은 있다." }
+      ]
+    },
+    {
+      "name": "김치찌개",
+      "store": "월화식당 구로디지털단지점",
+      "type": "한식",
+      "star": 5,
+      "visit_again": true,
+      "image": "https://boom-money-cd7.notion.site/image/attachment%3A788fef64-bf3d-4f56-9921-9c50c9953517%3AKakaoTalk_20251107_130345861_01.png.jpg?table=block&id=2a48e14b-e0e9-809c-8077-ccbda1ca4c34&spaceId=5a1c3cf7-a074-435d-8db5-b73805c4e6cc&width=1280&userId=&cache=v2&imgBuildSrc=requestProxiedImageUrl",
+      "detail": [
+        { "menu": "흑돼지김치찌개", "price": 10000, "review": "개쳐맛있음. 셀프바에 상추, 떡사리, 치즈사리, 라면사리 등이 있어서 자유롭게 가져올 수 있음. 밥이랑 라면사리가 무료임. 일단 찌개가 너무 맛있고 두부, 돼지고기, 김치도 맛있고 국물이 ㄹㅇ츠직임. 울엄마가 해준급과 살짝 비비는정도임. 계속 끓이면서 먹으니까 계속 뜨겁게 밥말아서 야무지게 먹을 수 있음. 한식 좋아하는 사람으로써 만족이었다. 자리도 많고 6명 앉을 수 있는 자리도 두세개?여서 다같이 먹으러 가기도 좋음." }
+      ]
+    },
+    {
+      "name": "곰탕",
+      "store": "금성관나주곰탕 구로직영점",
+      "type": "한식",
+      "star": 4,
+      "visit_again": true,
+      "image": "https://boom-money-cd7.notion.site/image/attachment%3A6daaebfc-5642-496c-8af5-530bee8d1090%3AKakaoTalk_20251113_105906718_02.png.jpg?table=block&id=2aa8e14b-e0e9-80cc-a16b-f36161c6070e&spaceId=5a1c3cf7-a074-435d-8db5-b73805c4e6cc&width=1280&userId=&cache=v2&imgBuildSrc=requestProxiedImageUrl",
+      "detail": [
+        { "menu": "한우나주곰탕", "price": 11000, "review": "일단.. 맛있었다. 맑은 국물의 국밥을 좋아하는 편이라 순댓국보단 곰탕을 좋아하는데 역시 맛있었음. 고기에서 냄새도 안나고 파랑 계란이 적절히 들어있었고, 깍두기도 무난하게 맛있었다. 밥 상태도 나쁘지 않았고, 국물이 상당히 괜찮았음. 점심 아니고 저녁에 먹은거라 점심시간 분위기는 잘 모르겠는데 매장 자체가 굉장히 넓어서 자리 부족할 일은 웬만해선 없을 듯하다. 위생도 괜찮고 다 나쁘지 않았는데 굳이굳이 단점을 하나 꼽자면 팔팔 끓는 뚝배기에 나오는건 아니라서 국물이 밥 다먹어갈때쯤에 뜨겁지 않다는거? 그래서 별점 하나 빼긴 했는데 사실 깨끗하고 깔끔하게 맛있어서 5점감이긴함" }
+      ]
+    },
+    {
+      "name": "된장찌개",
+      "store": "백화돈 구로본점",
+      "type": "한식",
+      "star": 3,
+      "visit_again": true,
+      "image": "https://boom-money-cd7.notion.site/image/attachment%3A7a9426ea-82da-4cf8-8e7f-3e4caaa0f34b%3AKakaoTalk_20251114_131956847_01.png.jpg?table=block&id=2ab8e14b-e0e9-80a9-9c83-c9cd0ddae166&spaceId=5a1c3cf7-a074-435d-8db5-b73805c4e6cc&width=1280&userId=&cache=v2&imgBuildSrc=requestProxiedImageUrl",
+      "detail": [
+        { "menu": "한우 된장찌개", "price": 8000, "review": "무난한 된장찌개와 밥 맛임. 위생도 깨끗하고 밑반찬은 안먹어봐서 모르겠는데 그리 맛있어보이진 않음. 찌개안에 차돌박이가 많진 않다. 밥 상태는 괜찮았음. 찌개가 보글보글 끓으면서 나와서 뜨겁게 먹을 수 있었음. 두부도 몇개 있다. 간도 짭짤하니 적절함. 같이 간 사람들은 육회비빔밥이랑 제육볶음 먹었는데 둘다 그저 그렇다고 한다. 된장찌개는 맛있엇음. 근데 된장찌개랑만 먹어야해서 국물과 밥을 먹는 느낌? 먹을만한 반찬은 없어서 부실하게 느껴질수도 있을 것 같음. 된장찌개 맛 자체는 4점정도인데 뭔가.. 느낌이 3점을 주고싶은 마음이라 별3개줌" }
+      ]
+    },
+    {
+      "name": "짜장면",
+      "store": "리옌 본점",
+      "type": "중식",
+      "star": 5,
+      "visit_again": true,
+      "image": "https://picsum.photos/200",
+      "detail": [
+        { "menu": "간짜장", "price": 10000, "review": "구디의 중식당 1황 = 리옌 임
+		걍 중식먹을거면 리옌 가야함 여기가 젤 맛있음" }
+      ]
+    },
+    {
+      "name": "짬뽕",
+      "store": "중화백반",
+      "type": "중식",
+      "star": 5,
+      "visit_again": true,
+      "image": "https://picsum.photos/200",
+      "detail": [
+        { "menu": "중화국밥", "price": 13000, "review": "전날 레전드 과음을 하고 진심 죽을 것 같아서 메뉴를 해장짬뽕으로 함 걍 국물 먹자마자 크아악;;;소리남" }
+      ]
+    },
+    {
+      "name": "마라탕",
+      "store": "탕화쿵푸마라탕 구로디지털점",
+      "type": "중식",
+      "star": 4,
+      "visit_again": true,
+      "image": "https://picsum.photos/200",
+      "detail": [
+        { "menu": "마라탕", "price": 12000, "review": "인생 최고의 마라탕" }
+      ]
+    },
+    {
+      "name": "짜장면",
+      "store": "홍매",
+      "type": "중식, 면",
+      "star": 4,
+      "visit_again": true,
+      "image": "https://picsum.photos/200",
+      "detail": [
+        { "menu": "간짜장", "price": 8000, "review": "요즘같은 고물가 시대에 그냥 짜장도 아니고 간짜장이 8000원이면 가성비적으로 아주 훌륭함  " }
+      ]
+    },
+    {
+      "name": "마라탕",
+      "store": "용용선생",
+      "type": "중식",
+      "star": 3,
+      "visit_again": false,
+      "image": "https://picsum.photos/200",
+      "detail": [
+        { "menu": "마라전골", "price": 24900, "review": "역시 용용선생은 마라전골이 제일 맛있음 ㅎㅎ" }
+      ]
+    },
+    {
+      "name": "스테이크",
+      "store": "헤비스테이크 구로디지털단지점",
+      "type": "양식",
+      "star": 4,
+      "visit_again": true,
+      "image": "https://d12zq4w4guyljn.cloudfront.net/750_750_20250805065502_photo1_6e3ac7057705.webp",
+      "detail": [
+        { "menu": "치킨 스테이크", "price": 9900, "review": "사람이 많음" }
+      ]
+    },
+    {
+      "name": "플래터",
+      "store": "탄광맥주 구로디지털단지점",
+      "type": "양식",
+      "star": 3,
+      "visit_again": false,
+      "image": "https://cdn.ziksir.com/news/photo/202608/142856_162669_0112.jpeg",
+      "detail": [
+        { "menu": "광부플래터", "price": 13000, "review": "내부가 넓다" }
+      ]
+    },
+    {
+      "name": "브런치",
+      "store": "메이비카페",
+      "type": "양식",
+      "star": 3,
+      "visit_again": false,
+      "image": "https://mblogthumb-phinf.pstatic.net/MjAyNjA0MjdfMjU0/MDAxNzc3Mjk1NDgyNzk5.PO7YTGHDfpIP2z0ODQ4qrPc2Hjnq44G4zLflzSnsIQAg.gSuuIUQENVS1NXnItBfrCZ2oE1Ki-_YMmnpN_ck_8-wg.JPEG/output%EF%BC%BF2942029949.jpg?type=w800E",
+      "detail": [
+        { "menu": "데일리 브런치", "price": 14000, "review": "햇볕이 잘 들어옴" }
+      ]
+    },
+    {
+      "name": "치킨",
+      "store": "닭장맥주",
+      "type": "양식",
+      "star": 4,
+      "visit_again": true,
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJeepWEasietf507IYCf1g92Wo6T5WXGTuhQcH0DaMPwq9AtUSf7Ik9ivo&s=10",
+      "detail": [
+        { "menu": "치떡세트", "price": 14900, "review": "사람이 많음" }
+      ]
+    },
+    {
+      "name": "함박스테이크",
+      "store": "함박정",
+      "type": "양식",
+      "star": 2,
+      "visit_again": false,
+      "image": "https://d12zq4w4guyljn.cloudfront.net/750_750_20260925123847_photo1_41a656182398.webp?v=1",
+      "detail": [
+        { "menu": "지개함박 스테이크 도시락", "price": 8900, "review": "고기도 아닌게 고기인 척" }
+      ]
+    },
+    {
+      "name": "돈까스",
+      "store": "흥도식당 구로디지털단지점",
+      "type": "일식",
+      "star": 5,
+      "visit_again": true,
+      "image": "https://d12zq4w4guyljn.cloudfront.net/750_750_20250805051532_photo2_33460debfee6.webp",
+      "detail": [
+        { "menu": "돈까스", "price": 12000, "review": "존맛탱구리" }
+      ]
+    },
+    {
+      "name": "카레",
+      "store": "아비꼬 구로디지털역점",
+      "type": "일식",
+      "star": 4,
+      "visit_again": true,
+      "image": "https://d12zq4w4guyljn.cloudfront.net/750_750_20250805051532_photo2_33460debfee6.webp",
+      "detail": [
+        { "menu": "100시간 카레 + 치킨가라아게 (마늘후레이크 추가, 1단계) ", "price": 12500, "review": "식당이 넓음. 근데 사람도 많음." }
+      ]
+    },
+    {
+      "name": "냉모밀",
+      "store": "국수나무 구로디지털점",
+      "type": "일식",
+      "star": 2,
+      "visit_again": false,
+      "image": "https://d12zq4w4guyljn.cloudfront.net/750_750_20250805051532_photo2_33460debfee6.webp",
+      "detail": [
+        { "menu": "소치정식  (메밀소바 + 미니치즈돈까스) ", "price": 11800, "review": "시원 하기만 합니다." }
+      ]
+    },
+    {
+      "name": "사케동",
+      "store": "감,동 구로디지털단지점",
+      "type": "일식",
+      "star": 3,
+      "visit_again": true,
+      "image": "https://d12zq4w4guyljn.cloudfront.net/750_750_20250805051532_photo2_33460debfee6.webp",
+      "detail": [
+        { "menu": "사케동", "price": 15000, "review": "비싸지만 맛있음. 하지만 비싸" }
+      ]
+    },
+    {
+      "name": "우동",
+      "store": "역전우동0410 구로디지털역점",
+      "type": "일식",
+      "star": 3,
+      "visit_again": false,
+      "image": "https://d12zq4w4guyljn.cloudfront.net/750_750_20250805051532_photo2_33460debfee6.webp",
+      "detail": [
+        { "menu": "꼬치어묵우동+치킨미니덮밥", "price": 12000, "review": "존맛탱구리" }
+      ]
+    }
+  ]
+}
