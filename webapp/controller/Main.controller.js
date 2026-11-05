@@ -6,6 +6,7 @@ sap.ui.define([
     return Controller.extend("project261105.controller.Main", {
         onInit() {
             console.log("hi");
+            console.log("hihi");
         }
     });
 });
