@@ -12,43 +12,47 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("project261105.controller.Main", {
-        formatter: formatter,
+        // formatter: formatter,
 
         onInit() {
-            let oModel = new JSONModel();                               
-            oModel.loadData("../model/data.json", {}, false);       
-            this.getOwnerComponent().setModel(oModel); // JSONModel 생성
         },
 
         /* ===== [A] 목록 · 네비게이션 ===== */
-        onItemPress(oEvent) {
+        onListItemPress(oEvent) {
+            const sPath = oEvent.getParameter("listItem").getBindingContext().getPath(); // "/food/3"
+            const sFoodId = sPath.split("/").pop();
+
+            this.getOwnerComponent().getRouter().navTo("RouteDetail", {
+                paramId: sFoodId,
+                layout: "TwoColumnsMidExpanded"
+            });
         },
         /* ===== [A] end ===== */
 
         /* ===== [B] 검색 · 필터 · 정렬 ===== */
-        onUpdateFinished(oEvent) {
-        },
-        onSearch(oEvent) {
-        },
-        onTypeFilterChange(oEvent) {
-        },
-        onSortPress() {
-        },
-        _applyFilters() {
-        },
-        /* ===== [B] end ===== */
+        // onUpdateFinished: function (oEvent) {
+        // },
+        // onSearch: function (oEvent) {
+        // },
+        // onTypeFilterChange: function (oEvent) {
+        // },
+        // onSortPress: function () {
+        // },
+        // _applyFilters: function () {
+        // },
+        // /* ===== [B] end ===== */
 
-        /* ===== [D] 추가 · 삭제 · 뽑기 ===== */
-        onOpenAddDialog() {
-        },
-        onSaveAdd() {
-        },
-        onCancelAdd() {
-        },
-        onDelete(oEvent) {
-        },
-        onRandomPick() {
-        }
+        // /* ===== [D] 추가 · 삭제 · 뽑기 ===== */
+        // onOpenAddDialog: function () {
+        // },
+        // onSaveAdd: function () {
+        // },
+        // onCancelAdd: function () {
+        // },
+        // onDelete: function (oEvent) {
+        // },
+        // onRandomPick: function () {
+        // }
         /* ===== [D] end ===== */
     });
 });

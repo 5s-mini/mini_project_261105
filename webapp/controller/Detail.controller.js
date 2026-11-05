@@ -4,6 +4,15 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("project261105.controller.Detail", {
-        onInit() {}
+        onInit() {
+            this.getOwnerComponent().getRouter().getRoute("RouteDetail")
+                .attachPatternMatched(this._onMatched, this);
+        },
+        _onMatched(oEvent) {
+            this.getView().bindElement("/food/" + oEvent.getParameter("arguments").paramId);
+        },
+        onClose() {
+            this.getOwnerComponent().getRouter().navTo("RouteMain", { layout: "OneColumn" });
+        }
     });
 });

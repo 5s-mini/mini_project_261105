@@ -38,7 +38,9 @@
       "minUI5Version": "1.154.0",
       "libs": {
         "sap.m": {},
-        "sap.ui.core": {}
+        "sap.ui.core": {},
+        "sap.f": {},
+        "sap.uxap": {}
       }
     },
     "contentDensities": {
@@ -51,6 +53,10 @@
         "settings": {
           "bundleName": "project261105.i18n.i18n"
         }
+      },
+      "": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/data.json"
       }
     },
     "resources": {
@@ -62,30 +68,21 @@
     },
     "routing": {
       "config": {
-        "routerClass": "sap.m.routing.Router",
-        "controlAggregation": "pages",
-        "controlId": "app",
+        "routerClass": "sap.f.routing.Router",
+        "controlId": "fcl",
         "transition": "slide",
         "type": "View",
         "viewType": "XML",
         "path": "project261105.view",
-        "async": true,
-        "viewPath": "project261105.view"
+        "async": true
       },
       "routes": [
-        {
-          "name": "RouteMain",
-          "pattern": ":?query:",
-          "target": [
-            "TargetMain"
-          ]
-        }
+        { "name": "RouteMain", "pattern": ":layout:", "target": ["TargetMain"] },
+        { "name": "RouteDetail", "pattern": "detail/{paramId}/{layout}", "target": ["TargetMain", "TargetDetail"] }
       ],
       "targets": {
-        "TargetMain": {
-          "id": "Main",
-          "name": "Main"
-        }
+        "TargetMain": { "id": "Main", "name": "Main", "controlAggregation": "beginColumnPages" },
+        "TargetDetail": { "id": "Detail", "name": "Detail", "controlAggregation": "midColumnPages" }
       }
     },
     "rootView": {
