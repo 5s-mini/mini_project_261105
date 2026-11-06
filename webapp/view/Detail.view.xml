@@ -90,7 +90,11 @@
         <ObjectPageSection titleUppercase="false" title="가격">
             <ObjectPageSubSection>
                 <blocks>
-					<m:Text text = "{detail/0/price}"/>
+					<m:Text text="{
+                    path : 'detail/0/price',
+                    type : 'sap.ui.model.type.Integer',
+                    formatOptions : { groupingEnabled : true }
+                    }원" /> <!-- detail 안의 → 0번째의 → price”, 즉 가격을 정수(Integer) 타입으로 다루고 세자리마다 묶어서 표시(groupingEnabled)한다 -->
 			    </blocks>
             </ObjectPageSubSection>
         </ObjectPageSection>
