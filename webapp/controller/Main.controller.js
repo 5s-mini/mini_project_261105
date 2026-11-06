@@ -73,29 +73,31 @@ sap.ui.define([
             // 1. Select에서 고른 종류의 key ("" = 전체, "한식" 등)
             let sKey = oEvent.getSource().getSelectedKey();
 
-            // 2. 표의 items 바인딩 가져오기
-            let oBinding = this.byId("productsTable").getBinding("items");
+            // 2. 고른 종류를 기억해 두기
+            this._sType = sKey;
 
-            // 3. "전체"면 필터 해제, 아니면 그 종류만 보이게
-            if (sKey === "") {
-                oBinding.filter([]);
-            } else {
-                oBinding.filter(new Filter("type", FilterOperator.EQ, sKey));
-            }
+            // 3. 검색어와 종류를 함께 적용
+            this._applyFilters();
 
             // 4. Popover 닫기
             this.byId("Filter").close();
         },
         onSearch: function (oEvent) {
-            // 검색 창에 입력한 내용 불러오기
-			let sQuery = oEvent.getParameter("query");
+            // 1. 검색어를 기억해 두기
+            this._sQuery = oEvent.getParameter("query");
 
+            // 2. 검색어와 종류를 함께 적용
+            this._applyFilters();
+        },
+        _applyFilters: function (oEvent) {
             // filter 배열 설정, data.json의 name(메뉴명) 속성값이 sQuery와 일치 여부를 검사하는 oFilter 선언
             let aFilters = [];
+            let sQuery = this._sQuery;
+            let sType = this._sType;
             let oNameFilter = new Filter("name", FilterOperator.Contains, sQuery),
                 oStoreFilter = new Filter("store", FilterOperator.Contains, sQuery);
 
-            // sQuery의 입력값 예외 확인
+            // sQuery가 존재할 경우 필터 적용
 			if (sQuery) {
 				aFilters.push(new Filter({
 					filters: [oNameFilter, oStoreFilter],
@@ -103,11 +105,24 @@ sap.ui.define([
 				}));
 			}
 
+            // sType이 존재할 경우 필터 적용
+            if (sType) {
+                aFilters.push(new Filter("type", FilterOperator.EQ, sType));
+            }
+
             // Table 불러오기
             let oTable = this.getView().byId("productsTable");
 
-            // Table에 filter 배열 적용하기
-			oTable.getBinding("items").filter(aFilters);
+            if (aFilters.length > 0) {
+                // Table에 필터를 이중으로 적용하기 (AND)
+                oTable.getBinding("items").filter(new Filter({
+                    filters: aFilters,
+                    and: true
+                }));
+            } else {
+                // Table에 필터 초기화하기
+                oTable.getBinding("items").filter([]);
+            }
 		},
         onRandom: function (oEvent) {
             // 현재 모델의 데이터 가져오기
@@ -117,7 +132,7 @@ sap.ui.define([
             let nMax = oModel.food.length;
 
             // 배열의 길이만큼 랜덤한 숫자를 뽑는 getRandomInt 함수 호출
-            let nRandom = this.getRandomInt(0, nMax - 1);
+            let nRandom = this._getRandomInt(0, nMax - 1);
 
             if (!this.pRandomDialog) {
                 // Random Dialog 로드
@@ -135,7 +150,7 @@ sap.ui.define([
                 oDialog.open();
             });
         },
-        getRandomInt: (min, max) => {
+        _getRandomInt: (min, max) => {
             // 랜덤 숫자 반환하기
             return Math.floor(Math.random() * (max - min + 1)) + min;
         },
