@@ -37,7 +37,7 @@
 					<Column hAlign="Center">
 						<Text text="메뉴" />
 					</Column>
-					<Column	hAlign="Center">
+					<Column	hAlign="Center" width="18rem">
 						<Text text="상호" />
 					</Column>
 					<Column	hAlign="Center">
@@ -70,7 +70,7 @@
 						<cells>
 							<!--ObjectIdentifier title="{food>Name}" Link="ddddd" /-->
 							<Text text="{name}" />
-                            <Text text="{store}" />
+                            <Text text="{store}" width="auto" />
                             <Text text="{type}" />
 							<Text text="{
 							   path : 'star',
