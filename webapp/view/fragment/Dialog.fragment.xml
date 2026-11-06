@@ -1,0 +1,78 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<Dialog id="idDialog" contentWidth="500px">
+		<content>
+			<f:SimpleForm
+				editable="true"
+				layout="ColumnLayout"
+				columnsM="2"
+				columnsL="2"
+				columnsXL="2">
+				<f:content>
+					<core:Title text="음식 정보" />
+
+					<Label text="먹었던 음식" />
+					<Input id="idname" value="{/name}" width="200px"/>
+
+					<Label text="음식점 상호명" />
+					<Input id="idstore" value="{/store}" width="200px" />
+
+					<Label text="분류" />
+					<Select id="idtype" forceSelection="false" width="200px" >
+                        <items>
+							<core:Item key="한식" text="한식" /> 
+							<core:Item key="중식" text="중식" />
+							<core:Item key="일식" text="일식" />
+							<core:Item key="양식" text="양식" />
+                        </items>
+                    </Select>
+
+					<Label text="별점" />
+					<Select id="idstars" forceSelection="false" width="200px" >
+                        <items>
+							<core:Item key="1" text="★☆☆☆☆" /> 
+							<core:Item key="2" text="★★☆☆☆" />
+							<core:Item key="3" text="★★★☆☆" />
+							<core:Item key="4" text="★★★★☆" />
+							<core:Item key="5" text="★★★★★" />
+                        </items>
+                    </Select>
+
+					<Label text="재방문 의사" />
+					<Select id="idrevisit" forceSelection="false" width="200px" >
+                        <items>
+							<core:Item key="true" text="O" /> 
+							<core:Item key="false" text="X" />
+                        </items>
+                    </Select>
+
+					<Label text="음식 이미지 URL" />
+					<Input id="idimgurl" value="{edit>/age}" width="400px" />
+
+					<core:Title text="세부사항" />
+
+					<Label text="메뉴" />
+					<Input id="idmenu" value="{edit>/age}" width="200px" />
+
+					<Label text="가격" />
+					<Input id="idprice" value="{edit>/grade_level}" width="200px" />
+
+					<Label text="후기" />
+					<TextArea id="idreview" value="{edit>/grade_level}" width="400px" height="100px"/>
+
+				</f:content>
+			</f:SimpleForm>
+		</content>
+		<footer>
+			<Toolbar>
+				<content>
+					<ToolbarSpacer />
+					<Button id="idDialogBtn"  press=".onSaveDialogBtn" />
+					<Button text="닫기" press=".onCloseDialogBtn" />
+				</content>
+			</Toolbar>
+		</footer>
+	</Dialog>
+</core:FragmentDefinition>
