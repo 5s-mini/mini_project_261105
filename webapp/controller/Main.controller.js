@@ -114,7 +114,7 @@ sap.ui.define([
         onOpenMap: function (oEvent) {
             let sStore = oEvent.getSource().getBindingContext().getProperty("store");
             let sQuery = encodeURIComponent(sStore);
-            let sUrl = "https://map.kakao.com/link/search/" + sQuery;
+            let sUrl = "https://map.naver.com/p/search/" + sQuery;
 
             let URLHelper = mobileLibrary.URLHelper;
             URLHelper.redirect(sUrl, true);

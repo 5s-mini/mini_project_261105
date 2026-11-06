@@ -38,21 +38,21 @@
 					<Column	hAlign="Center">
 						<Text text="상호" />
 					</Column>
-					<Column	hAlign="End">
+					<Column	hAlign="Center">
 						<HBox justifyContent="End" alignItems="Center">
 						<Text text="종류" />
 						<Button icon="sap-icon://filter" type="Transparent"
                				    press=".onFilter"/>
     					</HBox>
 					</Column>
-					<Column	hAlign="End">
+					<Column	hAlign="Center">
 						<HBox justifyContent="End" alignItems="Center">
 						<Text text="별점" />
 						<Button icon="sap-icon://sort" type="Transparent"
                				    press=".onHeaderPress('star')"/>
     					</HBox>
 					</Column>
-					<Column	hAlign="End">
+					<Column	hAlign="Center">
 						<HBox justifyContent="End" alignItems="Center">
 						<Text text="추천여부" />
 						<Button icon="sap-icon://sort" type="Transparent"
