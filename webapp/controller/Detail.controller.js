@@ -171,6 +171,8 @@ sap.ui.define([
 
             // 안내 메시지 띄우고 Dialog 닫기
             MessageToast.show("맛집 정보가 수정되었습니다.");
+
+            this.onStarMean();
             this.onCloseDialogBtn();
         },
         onCloseDialogBtn() {
