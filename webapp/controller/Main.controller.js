@@ -12,9 +12,11 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("project261105.controller.Main", {
-        // formatter: formatter,
+        formatter: formatter,
 
         onInit() {
+             // 종류 선택 목록용 모델 (처음엔 빈 목록)
+            this.getView().setModel(new JSONModel({ types: [] }), "typeList");
         },
 
         /* ===== [A] 목록 · 네비게이션 ===== */
@@ -27,6 +29,64 @@ sap.ui.define([
                 layout: "TwoColumnsMidExpanded"
             });
         },
+        onHeaderPress : function(sField) {
+            // 같은 열을 다시 누르면 방향 반대로, 다른 열이면 내림차순(좋은 것부터)
+            this._bDesc = (this._sSortField === sField) ? !this._bDesc : true;
+            this._sSortField = sField;
+
+            let aSorters = [new Sorter(sField, this._bDesc)];
+            this.byId("productsTable").getBinding("items").sort(aSorters);
+        },
+        onFilter : function (oEvent) {
+            let oButton = oEvent.getSource();    // 누른 필터 버튼
+
+            // ===== 1) 종류 목록 만들기 (방법 A) =====
+            let aFood = this.getView().getModel().getProperty("/food");
+            let aNames = [];                                    // 글자만 모으는 배열
+
+            for (let i = 0; i < aFood.length; i++) {
+                let sType = aFood[i].type.trim();
+                if (sType !== "" && !aNames.includes(sType)) {  // 아직 없으면 추가
+                    aNames.push(sType);
+                }
+            }
+
+            let aTypes = [{ key: "", text: "전체" }];           // Select용 목록
+            for (let i = 0; i < aNames.length; i++) {
+                aTypes.push({ key: aNames[i], text: aNames[i] });
+            }
+            this.getView().getModel("typeList").setProperty("/types", aTypes);
+
+            // ===== 2) Popover 열기 (그대로) =====
+            if (!this._pTypePopover) {
+                this._pTypePopover = this.loadFragment({
+                    name: "project261105.view.fragment.Filter"
+                });
+            }
+            this._pTypePopover.then(function (oPopover) {
+                oPopover.openBy(oButton);
+            });
+        },
+        onTypeSelect : function (oEvent) {
+            // 1. Select에서 고른 종류의 key ("" = 전체, "한식" 등)
+            let sKey = oEvent.getSource().getSelectedKey();
+
+            // 2. 표의 items 바인딩 가져오기
+            let oBinding = this.byId("productsTable").getBinding("items");
+
+            // 3. "전체"면 필터 해제, 아니면 그 종류만 보이게
+            if (sKey === "") {
+                oBinding.filter([]);
+            } else {
+                oBinding.filter(new Filter("type", FilterOperator.EQ, sKey));
+            }
+
+            // 4. Popover 닫기
+            this.byId("Filter").close();
+        }
+
+
+
         /* ===== [A] end ===== */
 
         /* ===== [B] 검색 · 필터 · 정렬 ===== */

@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Popover id="Filter" showHeader="false" placement="Bottom">
+        <Select id="typeSelect"
+                class="sapUiSmallMargin"
+                width="12rem"
+                items="{typeList>/types}"
+                change=".onTypeSelect">
+            <core:Item key="{typeList>key}" text="{typeList>text}"/>
+        </Select>
+    </Popover>
+</core:FragmentDefinition>

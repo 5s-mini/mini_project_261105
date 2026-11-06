@@ -1,5 +1,6 @@
 <mvc:View controllerName="project261105.controller.Main"
     xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
     xmlns:f="sap.f"
     xmlns="sap.m">
  	<f:DynamicPage id="dynamicPageId"
@@ -26,7 +27,6 @@
 				<headerToolbar>
 					<OverflowToolbar>
 						<ToolbarSpacer/>
-						<SearchField search=".onSearch" width="17.5rem"/>
 						<OverflowToolbarButton icon="sap-icon://add" type="Transparent" press=".onAdd"/>
 						<OverflowToolbarButton icon="sap-icon://sort" type="Transparent" press=".onSort"/>
 					</OverflowToolbar>
@@ -39,13 +39,25 @@
 						<Text text="상호" />
 					</Column>
 					<Column	hAlign="End">
+						<HBox justifyContent="End" alignItems="Center">
 						<Text text="종류" />
+						<Button icon="sap-icon://filter" type="Transparent"
+               				    press=".onFilter"/>
+    					</HBox>
 					</Column>
 					<Column	hAlign="End">
+						<HBox justifyContent="End" alignItems="Center">
 						<Text text="별점" />
+						<Button icon="sap-icon://sort" type="Transparent"
+               				    press=".onHeaderPress('star')"/>
+    					</HBox>
 					</Column>
 					<Column	hAlign="End">
-						<Text text="재방문의사" />
+						<HBox justifyContent="End" alignItems="Center">
+						<Text text="추천여부" />
+						<Button icon="sap-icon://sort" type="Transparent"
+               				    press=".onHeaderPress('visit_again')"/>
+    					</HBox>
 					</Column>    
                     <Column	hAlign="End">
 						<Text text="위치" />
@@ -54,13 +66,18 @@
 				<items>
 					<ColumnListItem type="Navigation">
 						<cells>
-							<!--ObjectIdentifier title="{food>Name}" text="ddddd" /-->
+							<!--ObjectIdentifier title="{food>Name}" Link="ddddd" /-->
 							<Text text="{name}" />
                             <Text text="{store}" />
                             <Text text="{type}" />
-                            <Text text="{star}" />
-                            <Text text="{visit_again}" />
-                            <Button text="지도 예시용" />                            
+							<Text text="{
+							   path : 'star',
+                       		   formatter : '.formatter.StarCount'
+							}" />
+							<core:Icon src="{=${visit_again} === true ? 'sap-icon://thumb-up' : 'sap-icon://thumb-down' }"
+                               		 color="{=${visit_again} === true ? '#2F9D27' : '#FF0000'}"
+                      		/>
+                            <Button text="지도" type="Accept" />                            
 						</cells>
 					</ColumnListItem>
 				</items>
