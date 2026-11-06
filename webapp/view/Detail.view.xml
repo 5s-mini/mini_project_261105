@@ -119,7 +119,7 @@
         <ObjectPageSection titleUppercase="false" title="재방문 의사">
             <ObjectPageSubSection>
                 <blocks>
-					<m:Text text ="{= ${stavisit_again} === 'true' ? '있어요!!' : '없어요'}"/>
+					<m:Text text ="{= ${visit_again} ? '있어요!!' : '없어요'}"/>
 			    </blocks>
             </ObjectPageSubSection>
         </ObjectPageSection>
