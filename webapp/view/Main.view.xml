@@ -24,7 +24,7 @@
 				width="auto">
 				<headerToolbar>
 					<OverflowToolbar>
-						<SearchField placeholder="메뉴 검색 (ex. 순대국밥)" search=".onSearch" width="17.5rem"/>
+						<SearchField placeholder="메뉴 검색 (ex. 순대국밥)" search=".onSearch" width="15rem"/>
 						<OverflowToolbarButton icon="sap-icon://filter" type="Transparent" press=".onFilter"/>
 						<OverflowToolbarButton icon="sap-icon://sort" type="Transparent" press=".onSort"/>
 						<ToolbarSpacer/>
@@ -64,7 +64,7 @@
 									formatter : '.oFormat.starNumber'
 							}" />
                             <Text text="{= ${visit_again} ? '있어요' : '없어요' }" />
-                            <Button text="지도 예시용" />                            
+                            <Button text="지도 보기" icon="sap-icon://map" press=".onOpenMap" />                            
 						</cells>
 					</ColumnListItem>
 				</items>

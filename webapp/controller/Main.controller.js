@@ -7,8 +7,9 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/m/MessageBox",
     "sap/m/MessageToast",
+    "sap/m/library",
     "project261105/model/formatter"
-], (Controller, Filter, FilterOperator, Sorter, JSONModel, Fragment, MessageBox, MessageToast, formatter) => {
+], (Controller, Filter, FilterOperator, Sorter, JSONModel, Fragment, MessageBox, MessageToast, mobileLibrary, formatter) => {
     "use strict";
 
     return Controller.extend("project261105.controller.Main", {
@@ -48,6 +49,14 @@ sap.ui.define([
             // Table에 filter 배열 적용하기
 			oTable.getBinding("items").filter(aFilters);
 		},
+        onOpenMap: function (oEvent) {
+            let sStore = oEvent.getSource().getBindingContext().getProperty("store");
+            let sQuery = encodeURIComponent(sStore);
+            let sUrl = "https://map.kakao.com/link/search/" + sQuery;
+
+            let URLHelper = mobileLibrary.URLHelper;
+            URLHelper.redirect(sUrl, true);
+        }
         // onTypeFilterChange: function (oEvent) {
         // },
         // onSortPress: function () {
