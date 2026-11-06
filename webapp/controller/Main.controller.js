@@ -82,7 +82,7 @@ sap.ui.define([
 
             // 4. Popover 닫기
             this.byId("Filter").close();
-        }
+        },
 
 
 
