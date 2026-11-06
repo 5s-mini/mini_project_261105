@@ -29,7 +29,7 @@
 				>
 				<headerToolbar>
 					<OverflowToolbar>
-						<SearchField placeholder="메뉴 검색 (ex. 순대국밥)" search=".onSearch" width="17.5rem"/>
+						<SearchField placeholder="메뉴 또는 상호 검색" search=".onSearch" width="15rem"/>
 						<ToolbarSpacer/>
 						<Button text="데이터 추가" type="Accept" />
 						<Button text="데이터 삭제" type="Reject" press=".onDelete" />
@@ -58,7 +58,7 @@
 					</Column>
 					<Column	hAlign="Center">
 						<HBox justifyContent="End" alignItems="Center">
-						<Text text="추천여부" />
+						<Text text="추천 여부" />
 						<Button icon="sap-icon://sort" type="Transparent"
                				    press=".onHeaderPress('visit_again')"/>
     					</HBox>
