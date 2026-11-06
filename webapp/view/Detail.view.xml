@@ -10,7 +10,7 @@
                 <heading>
                     <m:HBox alignItems="Center">
                         <m:Button icon="sap-icon://nav-back" type="Transparent" tooltip="목록으로"
-                            press=".onNavBack" class="sapUiTinyMarginEnd"/>
+                            press=".onNavButtonPress" class="sapUiTinyMarginEnd"/>
                         <m:Title text="{name}" wrapping="true"/>
                     </m:HBox>
                 </heading>

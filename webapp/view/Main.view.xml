@@ -46,7 +46,7 @@
 						<Text text="별점" />
 					</Column>
 					<Column	hAlign="Center">
-						<Text text="재방문의사" />
+						<Text text="재방문 의사" />
 					</Column>    
                     <Column	hAlign="Center">
 						<Text text="위치" />
@@ -60,7 +60,7 @@
                             <Text text="{store}" />
                             <Text text="{type}" />
                             <Text text="{star}" />
-                            <Text text="{visit_again}" />
+                            <Text text="{= ${visit_again} ? '있어요' : '없어요' }" />
                             <Button text="지도 예시용" />                            
 						</cells>
 					</ColumnListItem>
