@@ -23,8 +23,7 @@ sap.ui.define([
             const sFoodId = sPath.split("/").pop();
 
             this.getOwnerComponent().getRouter().navTo("RouteDetail", {
-                paramId: sFoodId,
-                layout: "TwoColumnsMidExpanded"
+                paramId: sFoodId
             });
         },
         /* ===== [A] end ===== */

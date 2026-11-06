@@ -39,8 +39,7 @@
       "libs": {
         "sap.m": {},
         "sap.ui.core": {},
-        "sap.f": {},
-        "sap.uxap": {}
+        "sap.f": {}
       }
     },
     "contentDensities": {
@@ -68,8 +67,9 @@
     },
     "routing": {
       "config": {
-        "routerClass": "sap.f.routing.Router",
-        "controlId": "fcl",
+        "routerClass": "sap.m.routing.Router",
+        "controlId": "app",
+        "controlAggregation": "pages",
         "transition": "slide",
         "type": "View",
         "viewType": "XML",
@@ -77,12 +77,12 @@
         "async": true
       },
       "routes": [
-        { "name": "RouteMain", "pattern": ":layout:", "target": ["TargetMain"] },
-        { "name": "RouteDetail", "pattern": "detail/{paramId}/{layout}", "target": ["TargetMain", "TargetDetail"] }
+        { "name": "RouteMain", "pattern": "", "target": ["TargetMain"] },
+        { "name": "RouteDetail", "pattern": "detail/{paramId}", "target": ["TargetDetail"] }
       ],
       "targets": {
-        "TargetMain": { "id": "Main", "name": "Main", "controlAggregation": "beginColumnPages" },
-        "TargetDetail": { "id": "Detail", "name": "Detail", "controlAggregation": "midColumnPages" }
+        "TargetMain": { "id": "Main", "name": "Main", "level": 1 },
+        "TargetDetail": { "id": "Detail", "name": "Detail", "level": 2 }
       }
     },
     "rootView": {

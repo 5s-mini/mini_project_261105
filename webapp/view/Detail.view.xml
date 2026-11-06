@@ -1,76 +1,82 @@
 <mvc:View controllerName="project261105.controller.Detail"
-    xmlns="sap.uxap"
+    xmlns="sap.f"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:m="sap.m"
     displayBlock="true"
     height="100%">
-    <ObjectPageLayout id="ObjectPageLayout" showTitleInHeaderContent="true" upperCaseAnchorBar="false">
-        <headerTitle>
-            <ObjectPageDynamicHeaderTitle>
-                <expandedHeading><m:Title text="{name}" wrapping="true"/></expandedHeading>
-                <snappedHeading><m:Title text="{name}" wrapping="true"/></snappedHeading>
-                <expandedContent><m:Text text="{store}"/></expandedContent>
-                <navigationActions>
-                    <m:OverflowToolbarButton type="Transparent" icon="sap-icon://decline" press=".onClose" tooltip="닫기"/>
-                </navigationActions>
-            </ObjectPageDynamicHeaderTitle>
-        </headerTitle>
+    <DynamicPage id="detailPage" toggleHeaderOnTitleClick="true">
+        <title>
+            <DynamicPageTitle>
+                <heading>
+                    <m:HBox alignItems="Center">
+                        <m:Button icon="sap-icon://nav-back" type="Transparent" tooltip="목록으로"
+                            press=".onNavBack" class="sapUiTinyMarginEnd"/>
+                        <m:Title text="{name}" wrapping="true"/>
+                    </m:HBox>
+                </heading>
+                <expandedContent>
+                    <m:Text text="{store}"/>
+                </expandedContent>
+                <snappedContent>
+                    <m:Text text="{store}"/>
+                </snappedContent>
+            </DynamicPageTitle>
+        </title>
 
-        <headerContent>
-            <m:FlexBox wrap="Wrap" alignItems="Center">
-                <m:Image src="{image}" width="8rem" class="sapUiSmallMarginEnd"/>
-                <m:VBox class="sapUiSmallMarginEnd">
-                    <m:Label text="종류"/>
-                    <m:Text text="{type}"/>
-                </m:VBox>
-                <m:VBox class="sapUiSmallMarginEnd">
-                    <m:Label text="별점"/>
-                    <m:RatingIndicator value="{star}" maxValue="5" editable="false"/>
-                </m:VBox>
+        <header>
+            <DynamicPageHeader>
+                <m:FlexBox wrap="Wrap" alignItems="Center">
+                    <m:Image src="{image}" width="8rem" class="sapUiSmallMarginEnd"/>
+                    <m:VBox class="sapUiSmallMarginEnd">
+                        <m:Label text="종류"/>
+                        <m:Text text="{type}"/>
+                    </m:VBox>
+                    <m:VBox class="sapUiSmallMarginEnd">
+                        <m:Label text="별점"/>
+                        <m:RatingIndicator value="{star}" maxValue="5" editable="false"/>
+                    </m:VBox>
 
-                <!-- 별점과 가격을 더한 가성비 점수 -->
-                <m:VBox class="sapUiSmallMarginEnd">
-                    <m:Label text="가성비"/>
-                    <m:ProgressIndicator width="200px" showValue="true" 
-                        percentValue="{= Math.min(100, ${star} * 2 * 100000 / ${detail/0/price}) }"
-                        displayValue="{= Math.round(Math.min(100, ${star} * 2 * 100000 / ${detail/0/price})) }점"
-                        state="{= ${star} * 2 * 100000 / ${detail/0/price} >= 75 ? 'Success'
-                            : ${star} * 2 * 100000 / ${detail/0/price} >= 40 ? 'Warning' : 'Error' }"/>
-                </m:VBox>
-                <!-- 여기까지 -->
+                    <!-- 별점과 가격을 더한 가성비 점수 -->
+                    <m:VBox class="sapUiSmallMarginEnd">
+                        <m:Label text="가성비"/>
+                        <m:ProgressIndicator width="200px" showValue="true" 
+                            percentValue="{= Math.min(100, ${star} * 2 * 100000 / ${detail/0/price}) }"
+                            displayValue="{= Math.round(Math.min(100, ${star} * 2 * 100000 / ${detail/0/price})) }점"
+                            state="{= ${star} * 2 * 100000 / ${detail/0/price} >= 75 ? 'Success'
+                                : ${star} * 2 * 100000 / ${detail/0/price} >= 40 ? 'Warning' : 'Error' }"/>
+                    </m:VBox>
+                    <!-- 여기까지 -->
 
-                <m:VBox>
-                    <m:Label text="재방문"/>
-                    <m:Text text="{visit_again}"/>
-                </m:VBox>
-            </m:FlexBox>
-        </headerContent>
+                    <m:VBox>
+                        <m:Label text="재방문"/>
+                        <m:Text text="{visit_again}"/>
+                    </m:VBox>
+                </m:FlexBox>
+            </DynamicPageHeader>
+        </header>
 
-        <sections>
-            <ObjectPageSection title="먹은 메뉴">
-                <subSections>
-                    <ObjectPageSubSection>
-                        <blocks>
-                            <m:Table items="{detail}">
-                                <m:columns>
-                                    <m:Column><m:Text text="메뉴"/></m:Column>
-                                    <m:Column hAlign="End"><m:Text text="가격"/></m:Column>
-                                    <m:Column><m:Text text="후기"/></m:Column>
-                                </m:columns>
-                                <m:items>
-                                    <m:ColumnListItem>
-                                        <m:cells>
-                                            <m:Text text="{menu}"/>
-                                            <m:ObjectNumber number="{price}" unit="원"/>
-                                            <m:Text text="{review}"/>
-                                        </m:cells>
-                                    </m:ColumnListItem>
-                                </m:items>
-                            </m:Table>
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections>
-            </ObjectPageSection>
-        </sections>
-    </ObjectPageLayout>
+        <content>
+            <m:Table items="{detail}" class="sapFDynamicPageAlignContent" width="auto">
+                <m:headerToolbar>
+                    <m:Toolbar>
+                        <m:Title text="먹은 메뉴"/>
+                    </m:Toolbar>
+                </m:headerToolbar>
+                <m:columns>
+                    <m:Column><m:Text text="메뉴"/></m:Column>
+                    <m:Column><m:Text text="가격"/></m:Column>
+                    <m:Column><m:Text text="후기"/></m:Column>
+                </m:columns>
+                <m:items>
+                    <m:ColumnListItem>
+                        <m:cells>
+                            <m:Text text="{menu}"/>
+                            <m:ObjectNumber number="{price}" unit="원"/>
+                            <m:Text text="{review}"/>
+                        </m:cells>
+                    </m:ColumnListItem>
+                </m:items>
+            </m:Table>
+        </content>
+    </DynamicPage>
 </mvc:View>
