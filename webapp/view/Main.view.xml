@@ -22,13 +22,17 @@
 				inset="false"
 				items="{/food}"
 				class="sapFDynamicPageAlignContent"
-				width="auto">
+				width="auto"
+				mode="MultiSelect"
+				sticky="HeaderToolbar,ColumnHeaders"
+      			alternateRowColors="true"
+				>
 				<headerToolbar>
 					<OverflowToolbar>
 						<SearchField placeholder="메뉴 검색 (ex. 순대국밥)" search=".onSearch" width="17.5rem"/>
 						<ToolbarSpacer/>
 						<Button text="데이터 추가" type="Accept" />
-						<Button text="데이터 삭제" type="Reject" />
+						<Button text="데이터 삭제" type="Reject" press=".onDelete" />
 					</OverflowToolbar>	
 				</headerToolbar>
 				<columns>
