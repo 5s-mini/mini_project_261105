@@ -29,7 +29,7 @@
 						<ToolbarSpacer/>
 						<Button text="랜덤 뽑기" type="Emphasized" icon="sap-icon://synchronize" press=".onRandom" />
 						<ToolbarSpacer/>
-						<Button text="데이터 추가" type="Accept" />
+						<Button text="데이터 추가" type="Accept" press="onAddDialog" />
 						<Button text="데이터 삭제" type="Reject" />
 					</OverflowToolbar>	
 				</headerToolbar>
