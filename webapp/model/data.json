@@ -56,14 +56,14 @@
       ]
     },
     {
-      "name": "짜장면",
+      "name": "짬뽕",
       "store": "리옌 본점",
       "type": "중식",
       "star": 5,
       "visit_again": true,
-      "image": "https://picsum.photos/200",
+      "image": "https://boom-money-cd7.notion.site/image/attachment%3A5784474f-4bde-4c23-b67c-13aedb67b3a2%3Aimage.png?table=block&id=4048e14b-e0e9-80e6-8cf9-fefc06feec19&spaceId=5a1c3cf7-a074-435d-8db5-b73805c4e6cc&width=1070&userId=&cache=v2&imgBuildSrc=requestProxiedImageUrl",
       "detail": [
-        { "menu": "간짜장", "price": 10000, "review": "구디의 중식당 1황 = 리옌 임. 중식먹을거면 리옌 가야함 여기가 젤 맛있음" }
+        { "menu": "옛날짬뽕", "price": 10000, "review": "구디의 중식당 1황 = 리옌 임. 중식먹을거면 리옌 가야함 여기가 젤 맛있음" }
       ]
     },
     {
@@ -72,7 +72,7 @@
       "type": "중식",
       "star": 5,
       "visit_again": true,
-      "image": "https://picsum.photos/200",
+      "image": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNTAzMjdfMTYw%2FMDAxNzQzMDY3NzYwNzgy.0Nh13SQ0P9tvckP8_pxXuIN21A9H22QtCpZr3q_XDfwg.rMmtuUKrj1Qd1euYAVBaYB6xWyk9kPOdk5fdJDqEDosg.JPEG%2F900%25A3%25DF20250322%25A3%25DF181336.jpg&type=sc960_832",
       "detail": [
         { "menu": "중화국밥", "price": 13000, "review": "전날 레전드 과음을 하고 진심 죽을 것 같아서 메뉴를 해장짬뽕으로 함 걍 국물 먹자마자 크아악;;;소리남" }
       ]
@@ -83,7 +83,7 @@
       "type": "중식",
       "star": 4,
       "visit_again": true,
-      "image": "https://picsum.photos/200",
+      "image": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjA3MDVfMjEx%2FMDAxNzgzMjEzMjA5MDk3.BZXVCvoooS8u_K0rSt2DR4skAQgXT11e4hLDPVt5jMIg.IwtDWKqmQStMu5J3baaGgc_MAUcC5xq-b0hdTR_3jCIg.JPEG%2FIMG%25A3%25DF0011.jpg&type=sc960_832",
       "detail": [
         { "menu": "마라탕", "price": 12000, "review": "인생 최고의 마라탕" }
       ]
@@ -94,7 +94,7 @@
       "type": "중식",
       "star": 4,
       "visit_again": true,
-      "image": "https://picsum.photos/200",
+      "image": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyNjEwMDZfODUg%2FMDAxNzkxMjQzMTc1NzY1.27hUiFbxvCtuAGjLdkchyqK8amItmOnrK8T4ysIIfpog.UGu2vnfvRwkpL6EN5-KUY419_u8X1X4uNIBbvVvLBvMg.PNG%2FKakaoTalk_20261005_210805572_03.png&type=sc960_832",
       "detail": [
         { "menu": "간짜장", "price": 8000, "review": "요즘같은 고물가 시대에 그냥 짜장도 아니고 간짜장이 8000원이면 가성비적으로 아주 훌륭함  " }
       ]
@@ -105,7 +105,7 @@
       "type": "중식",
       "star": 3,
       "visit_again": false,
-      "image": "https://picsum.photos/200",
+      "image": "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA0MjZfMTAw%2FMDAxNjgyNDk0MTUzOTI1.1-83Pxo84ku-IY60K7erbPPzNdPLeuqvbfGdHbl-oekg.RolqMzgG8zkIBu01KjT7A0tkQlbCGWBbEMKwdBU9uuQg.JPEG.loveandlook7%2FIMG_4765.jpg&type=sc960_832",
       "detail": [
         { "menu": "마라전골", "price": 24900, "review": "역시 용용선생은 마라전골이 제일 맛있음 ㅎㅎ" }
       ]
