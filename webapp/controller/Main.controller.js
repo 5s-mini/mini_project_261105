@@ -134,6 +134,84 @@ sap.ui.define([
 
             let URLHelper = mobileLibrary.URLHelper;
             URLHelper.redirect(sUrl, true);
+        },
+        onAddDialog: function () {
+            let oDialog = sap.ui.getCore().byId("idDialog");              // 학생 관리 Dialog가 이미 만들어져 있는지 id로 찾는다 (없으면 undefined)
+
+            // Dialog Fragment 파일 저장해두기
+            if(oDialog) {
+                oDialog.setTitle("맛집 추가");
+                sap.ui.getCore().byId("idDialogBtn").setText("추가");
+                
+                let addName = sap.ui.getCore().byId("idname").setValue();
+                let addStore = sap.ui.getCore().byId("idstore").setValue();
+                let addType = sap.ui.getCore().byId("idtype").setSelectedKey();
+                let addStars = sap.ui.getCore().byId("idstars").setSelectedKey();
+                let addRevisit = sap.ui.getCore().byId("idrevisit").setSelectedKey();
+                let addImgurl = sap.ui.getCore().byId("idimgurl").setValue();
+
+                let addMenu = sap.ui.getCore().byId("idmenu").setValue();
+                let addPrice = sap.ui.getCore().byId("idprice").setValue();
+                let addReview = sap.ui.getCore().byId("idreview").setValue();
+
+                oDialog.open();
+
+                return;
+            }
+
+            Fragment.load({
+                name : "project261105.view.fragment.Dialog",              // 불러올 파일 위치 (webapp/view/fragment/Dialoged.fragment.xml)
+                type : "XML",                                               // 파일 형식
+                controller : this,                                          // Dialog 안 이벤트 함수는 Main 컨트롤러에서 찾도록 연결
+            }).then(function(oDialog) {                                     // 파일을 다 읽어서 Dialog가 만들어지면 실행
+                oDialog.setTitle("맛집 추가");
+                sap.ui.getCore().byId("idDialogBtn").setText("추가");
+                oDialog.open();
+            });
+        },
+        onSaveDialogBtn: function () {
+            let addName = sap.ui.getCore().byId("idname").getValue();
+            let addStore = sap.ui.getCore().byId("idstore").getValue();
+            let addType = sap.ui.getCore().byId("idtype").getSelectedKey();
+            let addStars = sap.ui.getCore().byId("idstars").getSelectedKey();
+            let addRevisit = sap.ui.getCore().byId("idrevisit").getSelectedKey();
+            let addImgurl = sap.ui.getCore().byId("idimgurl").getValue();
+            let addMenu = sap.ui.getCore().byId("idmenu").getValue();
+            let addPrice = sap.ui.getCore().byId("idprice").getValue();
+            let addReview = sap.ui.getCore().byId("idreview").getValue();
+
+            if (addName === "" || addStore === "" || addType === "" || addStars === "" ||
+            addRevisit === "" || addImgurl === "" || addMenu === "" || addPrice === "" ||
+            addReview === "") {
+                MessageBox.warning("모든 항목을 입력해주세요.");
+                return;
+            }
+
+            let oNewFood = {
+                name: addName,
+                store: addStore,
+                type: addType,
+                star: Number(addStars),
+                visit_again: addRevisit === "true",
+                image: addImgurl,
+                detail: [
+                    {
+                        menu: addMenu,
+                        price: Number(addPrice),
+                        review: addReview
+                    }
+                ]
+            };
+            let AddModel = this.getView().getModel();
+            let aFood = AddModel.getProperty("/food");
+            aFood.push(oNewFood);
+            AddModel.setProperty("/food", aFood);
+
+            MessageToast.show("맛집이 추가되었습니다♥");
+            this.onCloseDialogBtn();
+        },
+        onCloseDialogBtn() {
+            sap.ui.getCore().byId("idDialog").close();
         }
         // onTypeFilterChange: function (oEvent) {
         // },
@@ -144,10 +222,6 @@ sap.ui.define([
         // /* ===== [B] end ===== */
 
         // /* ===== [D] 추가 · 삭제 · 뽑기 ===== */
-        // onOpenAddDialog: function () {
-        // },
-        // onSaveAdd: function () {
-        // },
         // onCancelAdd: function () {
         // },
         // onDelete: function (oEvent) {
