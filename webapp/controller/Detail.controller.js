@@ -210,10 +210,13 @@ sap.ui.define([
             let meanStarValue = sum/(commentLength+1);
             let meanStarIconValue = Math.round(meanStarValue);
 
-            let sStar = formatter.starNumber(meanStarIconValue);
-            this.byId("starMean").setText(sStar);
-            this.byId("TitleStarText").setText(sStar);
-            this.byId("starRateText").setText(meanStarValue.toFixed(1))
+            let sStar = formatter.starNumber(meanStarIconValue); //포메터 적용
+            this.byId("starMean").setText(sStar); //별점 내용 수정
+            this.byId("TitleStarText").setText(sStar); //상단 별점 수정
+            this.byId("starRateText").setText(meanStarValue.toFixed(1)) //별점 숫자 업데이트
+
+            //메인모델에 반영하기
+            this.getView().getModel().setProperty(sPath+"/star",meanStarIconValue);
             
         }
 
