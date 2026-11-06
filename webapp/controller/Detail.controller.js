@@ -43,10 +43,10 @@ sap.ui.define([
              let commentInput = this.byId("commentInput").getValue().trim();
              let StarRateCombo = Number(this.byId("starRate").getSelectedKey());
 
-             //이름과 댓글 모두 작성이 되야 댓글 적용
+             //닉네임과 댓글 모두 작성이 되야 댓글 적용
 
              if(!commentName||!commentInput){
-                sap.m.MessageToast.show("이름과 댓글을 모두 입력해 주세요");
+                sap.m.MessageToast.show("닉네임과 댓글을 모두 입력해 주세요");
                 return;
              }
 
