@@ -157,7 +157,7 @@ sap.ui.define([
             mobileLibrary.URLHelper.redirect(sUrl, true);
         },
         onAddDialog: function () {
-            let oDialog = sap.ui.getCore().byId("idDialog");              // 학생 관리 Dialog가 이미 만들어져 있는지 id로 찾는다 (없으면 undefined)
+            let oDialog = sap.ui.getCore().byId("idDialog");
 
             // Dialog Fragment 파일 저장해두기
             if(oDialog) {
@@ -181,7 +181,7 @@ sap.ui.define([
             }
 
             Fragment.load({
-                name : "project261105.view.fragment.Dialog",              // 불러올 파일 위치 (webapp/view/fragment/Dialoged.fragment.xml)
+                name : "project261105.view.fragment.Dialog",                // 불러올 파일 위치 (webapp/view/fragment/Dialoged.fragment.xml)
                 type : "XML",                                               // 파일 형식
                 controller : this,                                          // Dialog 안 이벤트 함수는 Main 컨트롤러에서 찾도록 연결
             }).then(function(oDialog) {                                     // 파일을 다 읽어서 Dialog가 만들어지면 실행
@@ -190,24 +190,63 @@ sap.ui.define([
                 oDialog.open();
             });
         },
+        onAddDialog: function () {
+            let oDialog = this.byId("idDialog");
+
+            if (oDialog) {
+                oDialog.setTitle("맛집 추가");
+                this.byId("idDialogBtn").setText("추가");
+
+                this.byId("idname").setValue("");-
+                this.byId("idstore").setValue("");
+                this.byId("idtype").setSelectedKey("");
+                this.byId("idstars").setSelectedKey("");
+                this.byId("idrevisit").setSelectedKey("");
+                this.byId("idimgurl").setValue("");
+                this.byId("idmenu").setValue("");
+                this.byId("idprice").setValue("");
+                this.byId("idreview").setValue("");
+
+                oDialog.open();
+                return;
+            }
+
+            Fragment.load({
+                // Dialog 안 id들 앞에 Main 이름표를 붙임
+                // → Detail의 Dialog와 섞이지 않고, this.byId()로 찾을 수 있게 됨
+                id: this.getView().getId(),
+                name : "project261105.view.fragment.Dialog",
+                type : "XML",
+                controller : this,      // Dialog 버튼의 press 함수를 이 Main Controller에서 찾음
+                }).then((oDialog) => {
+                // 파일을 다 불러온 뒤에 실행되는 부분
+                // 화살표 함수(=>)라서 이 안에서도 this가 Main Controller를 가리킴
+                this.getView().addDependent(oDialog);                // Dialog를 Main 화면에 소속시킴
+                oDialog.setTitle("맛집 추가");
+                this.byId("idDialogBtn").setText("추가");
+                oDialog.open();
+            });
+        },
+
         onSaveDialogBtn: function () {
-            let addName = sap.ui.getCore().byId("idname").getValue();
-            let addStore = sap.ui.getCore().byId("idstore").getValue();
-            let addType = sap.ui.getCore().byId("idtype").getSelectedKey();
-            let addStars = sap.ui.getCore().byId("idstars").getSelectedKey();
-            let addRevisit = sap.ui.getCore().byId("idrevisit").getSelectedKey();
-            let addImgurl = sap.ui.getCore().byId("idimgurl").getValue();
-            let addMenu = sap.ui.getCore().byId("idmenu").getValue();
-            let addPrice = sap.ui.getCore().byId("idprice").getValue();
-            let addReview = sap.ui.getCore().byId("idreview").getValue();
+            let addName = this.byId("idname").getValue();
+            let addStore = this.byId("idstore").getValue();
+            let addType = this.byId("idtype").getSelectedKey();
+            let addStars = this.byId("idstars").getSelectedKey();
+            let addRevisit = this.byId("idrevisit").getSelectedKey();
+            let addImgurl = this.byId("idimgurl").getValue();
+            let addMenu = this.byId("idmenu").getValue();
+            let addPrice = this.byId("idprice").getValue();
+            let addReview = this.byId("idreview").getValue();
 
             if (addName === "" || addStore === "" || addType === "" || addStars === "" ||
-            addRevisit === "" || addImgurl === "" || addMenu === "" || addPrice === "" ||
-            addReview === "") {
+                addRevisit === "" || addImgurl === "" || addMenu === "" || addPrice === "" ||
+                addReview === "") {
                 MessageBox.warning("모든 항목을 입력해주세요.");
                 return;
             }
 
+            // data.json의 맛집 하나와 똑같은 모양으로 묶기
             let oNewFood = {
                 name: addName,
                 store: addStore,
@@ -223,17 +262,23 @@ sap.ui.define([
                     }
                 ]
             };
+
+            // 맛집 목록을 꺼내서 맨 뒤에 새 맛집을 넣고(push), 다시 모델에 넣음
+            // → 목록이 이 모델에 연결되어 있어서 화면에 새 줄이 자동으로 생김
             let AddModel = this.getView().getModel();
             let aFood = AddModel.getProperty("/food");
             aFood.push(oNewFood);
             AddModel.setProperty("/food", aFood);
 
-            MessageToast.show("맛집이 추가되었습니다♥");
+            MessageToast.show("맛집이 추가되었습니다.");
             this.onCloseDialogBtn();
         },
+
         onCloseDialogBtn() {
-            sap.ui.getCore().byId("idDialog").close();
+            // Main 이름표가 붙은 Dialog라서 sap.ui.getCore().byId가 아니라 this.byId로 찾음
+            this.byId("idDialog").close();
         },
+        
         onDelete : function() {
             let oTable = this.byId("productsTable");
             let aSelect = oTable.getSelectedItems();   // [[0]{}, [4]{}, [5]{}]
