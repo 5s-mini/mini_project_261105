@@ -51,14 +51,11 @@
             <!-- [묶음 2] 정보 -->
             <m:VBox class = "sapUiSmallMarginEnd">
             <m:Text text = "별점 :" />
-                <m:Text text="{
-							   path : 'star',
-                       		   formatter : '.formatter.starNumber'
-							}" />
+                <m:Text id = "TitleStarText" text="" />
             </m:VBox>
 
-            <!-- [묶음 3] 가성비 점수 정보 -->
-            <m:VBox class="sapUiSmallMarginEnd">
+            <!-- [묶음 3] 가성비 점수 정보 --> 
+            <m:VBox class="sapUiSmallMarginEnd" alignItems="End" width="1000px">
                 <m:Label text="가성비"/>
                 <m:ProgressIndicator width="200px" showValue="true" 
                         percentValue="{= Math.min(100, ${star} * 2 * 100000 / ${detail/0/price}) }"
@@ -93,7 +90,11 @@
         <ObjectPageSection titleUppercase="false" title="가격">
             <ObjectPageSubSection>
                 <blocks>
-					<m:Text text = "{detail/0/price}"/>
+					<m:Text text="{
+                    path : 'detail/0/price',
+                    type : 'sap.ui.model.type.Integer',
+                    formatOptions : { groupingEnabled : true }
+                    }원" /> <!-- detail 안의 → 0번째의 → price”, 즉 가격을 정수(Integer) 타입으로 다루고 세자리마다 묶어서 표시(groupingEnabled)한다 -->
 			    </blocks>
             </ObjectPageSubSection>
         </ObjectPageSection>
@@ -125,19 +126,22 @@
             </ObjectPageSubSection>
         </ObjectPageSection>
 
-        <!-- 별점 (TODO: RatingIndicator로 별 아이콘 표시 예정) -->
+        <!-- 별점 평균 -->
         <ObjectPageSection titleUppercase="false" title="별점">
             <ObjectPageSubSection>
                 <blocks>
-					 <m:Title text="{
-							   path : 'star',
-                       		   formatter : '.formatter.starNumber'
-							}" titleStyle="H2"/>
+					<m:Title id = "starMean" text="" titleStyle="H2"/>
+                    <m:VBox>
+                    <m:Title  text = "별점 평균"/>
+                    <m:Title id = "starRateText" text = "" titleStyle="H3"/>
+                    </m:VBox>
+
 			    </blocks>
             </ObjectPageSubSection>
         </ObjectPageSection>
 
-        <ObjectPageSection titleUppercase="false" title="댓글 목록">
+        <!-- || => 값이 있으면 오른쪽 내용 표시 --> 
+        <ObjectPageSection titleUppercase="false" title="댓글 목록 ({= ${comments/length} || 0 })">
             <ObjectPageSubSection>
                 <blocks>
                 <m:VBox>
@@ -155,7 +159,7 @@
                         <m:Input id = "commentInput" width="20rem" class="sapUiSmallMarginEnd"/>
                         <m:Button text = "입력 완료" press = "onCommentPress"/>
                     </m:HBox>
-                        <m:Table items = "{comments}">
+                        <m:Table  id = "commentTable" items = "{comments}">
                             <m:columns>
                                 <m:Column><m:Text text ="별점" /></m:Column>
                                 <m:Column><m:Text text ="닉네임" /></m:Column>
@@ -166,17 +170,17 @@
 						<m:cells>
 							<!--ObjectIdentifier title="{food>Name}" Link="ddddd" /-->
 							<m:Text text="{
-							   path : 'star',
+							   path : 'CommentStar',
                        		   formatter : '.formatter.starNumber'
 							}" />
                             <m:Text text="{name}" />
                             <m:Text text="{comment}" />                         
 						</m:cells>
 					</m:ColumnListItem>
-				</m:items>
+				    </m:items>
                         </m:Table>
                     </m:VBox>
-			    </blocks>
+	            </blocks>
             </ObjectPageSubSection>
         </ObjectPageSection>
     </sections>

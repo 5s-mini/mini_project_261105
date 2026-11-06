@@ -24,6 +24,9 @@ sap.ui.define([
             // 주소창에 바로 입력해서 들어온 경우 data.json이 아직 안 왔을 수 있으므로 기다린다
             oModel.dataLoaded().then(() => {
                 this.getView().bindElement(sPath); // 해당 맛집 데이터를 화면에 연결
+
+            //detatail페이지에 연결시 별점 평균 계산
+                this.onStarMean();
             });
         },
         onNavButtonPress: function() {
@@ -53,10 +56,18 @@ sap.ui.define([
                  }
 
              // 댓글정보들을 해당 배열에 삽입시킴 
-             aComments.push({ star: StarRateCombo, name: commentName, comment: commentInput });
+             aComments.push({ CommentStar   : StarRateCombo, name: commentName, comment: commentInput });
 
              // 수정한 배열을 /comments에 교체
              oModel.setProperty(sPath, aComments);
+
+             //별점 평균 업데이트
+             this.onStarMean()
+             
+             //input 초기화
+             this.byId("commentName").setValue("");
+             this.byId("commentInput").setValue("");
+
         },
 
         onEditBtn() {
@@ -160,11 +171,57 @@ sap.ui.define([
 
             // 안내 메시지 띄우고 Dialog 닫기
             MessageToast.show("맛집 정보가 수정되었습니다.");
+
+            // Dialog에서 별점 수정되면 별점 평균에 반영
+            this.onStarMean();
+
             this.onCloseDialogBtn();
         },
         onCloseDialogBtn() {
             // Detail 이름표가 붙은 Dialog라서 sap.ui.getCore().byId가 아니라 this.byId로 찾음
             this.byId("idDialog").close();
+        },
+        onStarMean : function(){
+            //별점 평균 업데이트 해주는 함수
+
+            //댓글들이 저장돼있는 배열 접근 댓글들 내용 나옴[{댓글1},{댓글2}]
+            let aCommentsData = this.byId("commentTable").getBindingContext().getProperty("comments"); 
+            
+            //댓글이 없으면 배열도 없으므로 빈 배열로 지정
+            if (!aCommentsData){
+                aCommentsData = [];
+            }
+            
+            //배열 길이 구하기
+            let commentLength = aCommentsData.length;
+            
+            
+            let oModel = this.getOwnerComponent().getModel(); //메인모델 불러오기
+
+             // 현재 화면에 연결된 맛집 경로 (예: "/food/0")
+            let sPath = this.getView().getBindingContext().getPath();  
+
+            // 원래 리뷰 작성자가 준 별점 sum의 기본값으로 설정(data.json의 star)
+            let reviewStar = oModel.getProperty(sPath+"/star");
+            let sum = reviewStar;
+            
+             // 댓글들의 별점을 하나씩 더함
+            for(let i = 0; i<commentLength; i++){
+                sum = sum+aCommentsData[i].CommentStar;
+            }
+            
+            //평균 구하기
+            let meanStarValue = sum/(commentLength+1);
+            let meanStarIconValue = Math.round(meanStarValue);
+
+            let sStar = formatter.starNumber(meanStarIconValue); //포메터 적용
+            this.byId("starMean").setText(sStar); //별점 내용 수정
+            this.byId("TitleStarText").setText(sStar); //상단 별점 수정
+            this.byId("starRateText").setText(meanStarValue.toFixed(1)) //별점 숫자 업데이트
+
+            //메인모델에 반영하기
+            this.getView().getModel().setProperty(sPath+"/star",meanStarIconValue);
+            
         }
 
     });
