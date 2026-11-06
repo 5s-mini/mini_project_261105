@@ -1,10 +1,12 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast"
-], (Controller, MessageToast) => {
+    "sap/m/MessageToast",
+    "project261105/model/formatter"
+], (Controller, MessageToast,formatter) => {
     "use strict";
 
     return Controller.extend("project261105.controller.Detail", {
+        formatter:formatter,
         onInit() {
             const oRouter = this.getOwnerComponent().getRouter();
             // RouteDetail의 패턴이 일치하면, _onPatternMatched 라는 함수를 실행

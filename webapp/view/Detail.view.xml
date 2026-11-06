@@ -1,82 +1,162 @@
 <mvc:View controllerName="project261105.controller.Detail"
-    xmlns="sap.f"
+    xmlns="sap.uxap"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:m="sap.m"
     displayBlock="true"
-    height="100%">
-    <DynamicPage id="detailPage" toggleHeaderOnTitleClick="true">
-        <title>
-            <DynamicPageTitle>
-                <heading>
-                    <m:HBox alignItems="Center">
-                        <m:Button icon="sap-icon://nav-back" type="Transparent" tooltip="목록으로"
-                            press=".onNavButtonPress" class="sapUiTinyMarginEnd"/>
-                        <m:Title text="{name}" wrapping="true"/>
+    height="100%"
+    xmlns:core= "sap.ui.core">
+    <ObjectPageLayout showTitleInHeaderContent = "true">
+
+    <!-- 페이지 맨 위 제목 영역(항상 보이는 부분)을 넣는 자리 -->
+    <headerTitle>
+        <!-- 제목 영역에 무엇을 보여줄지 정하는 곳 -->
+        <ObjectPageDynamicHeaderTitle>
+            <!-- 기본적으로 펼쳐져 있을 때 헤더 -->
+            <heading>
+            <m:HBox>
+                <m:Button icon="sap-icon://nav-back" type="Transparent"
+                  tooltip="뒤로가기" press=".onNavButtonPress"
+                  class="sapUiTinyMarginEnd"/>
+
+                <m:Title text="{store}" wrapping="true" />
+            </m:HBox>
+            </heading>
+
+            <!-- 버튼 추가 -->
+            <actions>
+                <m:Button
+						id="AttentionIconButton"
+						icon="sap-icon://edit"
+						type="Emphasized" 
+                        text = "리뷰 수정"/>
+            </actions>
+
+        </ObjectPageDynamicHeaderTitle>
+    </headerTitle>
+
+    <!-- 헤더 안쪽 타이틀 밑에 정보들 아래로 내리면 접힘-->
+    <headerContent>
+
+        <!-- 헤더 접히는 영역: FlexBox(가로)로 정보 묶음을 나란히 배치, 각 묶음은 VBox(세로), HBox(가로) -->
+        <m:FlexBox>
+
+            <!-- [묶음 1] 기본 정보 -->
+            <m:VBox class = "sapUiSmallMarginEnd">
+                <m:Title text = "카테고리" />
+                <m:Text text = "{type}" />
+                <m:Text text = "{name}" />
+            </m:VBox>
+
+            <!-- [묶음 2] 정보 -->
+            <m:VBox class = "sapUiSmallMarginEnd">
+            <m:Text text = "별점 :" />
+                <m:Text text="{
+							   path : 'star',
+                       		   formatter : '.formatter.starNumber'
+							}" />
+            </m:VBox>
+
+            <!-- [묶음 3] 가성비 점수 정보 -->
+            <m:VBox class="sapUiSmallMarginEnd">
+                <m:Label text="가성비"/>
+                <m:ProgressIndicator width="200px" showValue="true" 
+                        percentValue="{= Math.min(100, ${star} * 2 * 100000 / ${detail/0/price}) }"
+                        displayValue="{= Math.round(Math.min(100, ${star} * 2 * 100000 / ${detail/0/price})) }점"
+                        state="{= ${star} * 2 * 100000 / ${detail/0/price} >= 75 ? 'Success'
+                            : ${star} * 2 * 100000 / ${detail/0/price} >= 40 ? 'Warning' : 'Error' }"/>
+            </m:VBox>
+        </m:FlexBox>
+    </headerContent>
+
+<!--
+        본문 영역 (스크롤해서 내려보는 부분)
+        구조: ObjectPageSection(섹션) → subSections → ObjectPageSubSection(서브섹션) → blocks(실제 내용)
+        - 섹션 title = 앵커 바 버튼 이름 / 섹션이 2개 이상이면 앵커 바가 자동 생성됨
+        - 내용은 섹션에 바로 못 넣고 반드시 서브섹션의 blocks 안에 넣어야 함
+        - 서브섹션에 title이 없으면 섹션 제목만 표시됨
+        - titleUppercase="false" : 제목을 대문자로 바꾸지 않음
+    -->
+
+    <sections>
+
+        <!-- 먹은 음식 -->
+        <ObjectPageSection titleUppercase="false" id="goals" title="먹은 음식">
+        <ObjectPageSubSection>
+            <blocks>
+						<m:Text text = "{detail/0/menu}"/>
+			</blocks>
+        </ObjectPageSubSection>
+        </ObjectPageSection>
+
+        <!-- 가격 -->
+        <ObjectPageSection titleUppercase="false" title="가격">
+            <ObjectPageSubSection>
+                <blocks>
+					<m:Text text = "{detail/0/price}"/>
+			    </blocks>
+            </ObjectPageSubSection>
+        </ObjectPageSection>
+
+        <!-- 음식 사진 (src에 이미지 URL 또는 webapp 기준 경로) -->
+        <ObjectPageSection titleUppercase="false" title="사진">
+            <ObjectPageSubSection>
+                <blocks>
+					<m:Image src ="{image}"  height = "300px" width = "400px"/>
+			    </blocks>
+            </ObjectPageSubSection>
+        </ObjectPageSection>
+
+        <!--평가 -->
+        <ObjectPageSection titleUppercase="false" title="평가">
+            <ObjectPageSubSection>
+                <blocks>
+					<m:Text text = "{detail/0/review}"/>
+			    </blocks>
+            </ObjectPageSubSection>
+        </ObjectPageSection>
+
+        <!-- 재방문 의사 -->
+        <ObjectPageSection titleUppercase="false" title="재방문 의사">
+            <ObjectPageSubSection>
+                <blocks>
+					<m:Text text ="{= ${stavisit_again} === 'true' ? '있어요!!' : '없어요'}"/>
+			    </blocks>
+            </ObjectPageSubSection>
+        </ObjectPageSection>
+
+        <!-- 별점 (TODO: RatingIndicator로 별 아이콘 표시 예정) -->
+        <ObjectPageSection titleUppercase="false" title="별점">
+            <ObjectPageSubSection>
+                <blocks>
+					 <m:Title text="{
+							   path : 'star',
+                       		   formatter : '.formatter.starNumber'
+							}" titleStyle="H2"/>
+			    </blocks>
+            </ObjectPageSubSection>
+        </ObjectPageSection>
+
+        <ObjectPageSection titleUppercase="false" title="댓글 목록">
+            <ObjectPageSubSection>
+                <blocks>
+                <m:VBox>
+                    <m:HBox>
+                    <m:ComboBox placeholder="별점 선택" width="10rem">
+                        <core:Item key="1" text="★☆☆☆☆ (1점)"/>
+                        <core:Item key="2" text="★★☆☆☆ (2점)"/>
+                        <core:Item key="3" text="★★★☆☆ (3점)"/>
+                        <core:Item key="4" text="★★★★☆ (4점)"/>
+                        <core:Item key="5" text="★★★★★ (5점)"/>
+                    </m:ComboBox>
+                        <m:Input width="20rem"/>
+                       <m:Button text = "입력 완료" />
                     </m:HBox>
-                </heading>
-                <expandedContent>
-                    <m:Text text="{store}"/>
-                </expandedContent>
-                <snappedContent>
-                    <m:Text text="{store}"/>
-                </snappedContent>
-            </DynamicPageTitle>
-        </title>
-
-        <header>
-            <DynamicPageHeader>
-                <m:FlexBox wrap="Wrap" alignItems="Center">
-                    <m:Image src="{image}" width="8rem" class="sapUiSmallMarginEnd"/>
-                    <m:VBox class="sapUiSmallMarginEnd">
-                        <m:Label text="종류"/>
-                        <m:Text text="{type}"/>
+                        <m:Text text = "여기 댓글 출력"/>
                     </m:VBox>
-                    <m:VBox class="sapUiSmallMarginEnd">
-                        <m:Label text="별점"/>
-                        <m:RatingIndicator value="{star}" maxValue="5" editable="false"/>
-                    </m:VBox>
+			    </blocks>
+            </ObjectPageSubSection>
+        </ObjectPageSection>
+    </sections>
 
-                    <!-- 별점과 가격을 더한 가성비 점수 -->
-                    <m:VBox class="sapUiSmallMarginEnd">
-                        <m:Label text="가성비"/>
-                        <m:ProgressIndicator width="200px" showValue="true" 
-                            percentValue="{= Math.min(100, ${star} * 2 * 100000 / ${detail/0/price}) }"
-                            displayValue="{= Math.round(Math.min(100, ${star} * 2 * 100000 / ${detail/0/price})) }점"
-                            state="{= ${star} * 2 * 100000 / ${detail/0/price} >= 75 ? 'Success'
-                                : ${star} * 2 * 100000 / ${detail/0/price} >= 40 ? 'Warning' : 'Error' }"/>
-                    </m:VBox>
-                    <!-- 여기까지 -->
-
-                    <m:VBox>
-                        <m:Label text="재방문"/>
-                        <m:Text text="{visit_again}"/>
-                    </m:VBox>
-                </m:FlexBox>
-            </DynamicPageHeader>
-        </header>
-
-        <content>
-            <m:Table items="{detail}" class="sapFDynamicPageAlignContent" width="auto">
-                <m:headerToolbar>
-                    <m:Toolbar>
-                        <m:Title text="먹은 메뉴"/>
-                    </m:Toolbar>
-                </m:headerToolbar>
-                <m:columns>
-                    <m:Column><m:Text text="메뉴"/></m:Column>
-                    <m:Column><m:Text text="가격"/></m:Column>
-                    <m:Column><m:Text text="후기"/></m:Column>
-                </m:columns>
-                <m:items>
-                    <m:ColumnListItem>
-                        <m:cells>
-                            <m:Text text="{menu}"/>
-                            <m:ObjectNumber number="{price}" unit="원"/>
-                            <m:Text text="{review}"/>
-                        </m:cells>
-                    </m:ColumnListItem>
-                </m:items>
-            </m:Table>
-        </content>
-    </DynamicPage>
+    </ObjectPageLayout>
 </mvc:View>
