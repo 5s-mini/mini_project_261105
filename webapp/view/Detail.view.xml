@@ -136,6 +136,7 @@
             </ObjectPageSubSection>
         </ObjectPageSection>
 
+        <!-- || => 값이 있으면 오른쪽 내용 표시 --> 
         <ObjectPageSection titleUppercase="false" title="댓글 목록 ({= ${comments/length} || 0 })">
             <ObjectPageSubSection>
                 <blocks>

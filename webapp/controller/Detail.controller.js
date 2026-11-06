@@ -172,7 +172,9 @@ sap.ui.define([
             // 안내 메시지 띄우고 Dialog 닫기
             MessageToast.show("맛집 정보가 수정되었습니다.");
 
+            // Dialog에서 별점 수정되면 별점 평균에 반영
             this.onStarMean();
+
             this.onCloseDialogBtn();
         },
         onCloseDialogBtn() {
