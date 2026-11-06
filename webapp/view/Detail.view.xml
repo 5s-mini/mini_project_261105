@@ -43,7 +43,13 @@
             
             <m:HBox >
                 <!-- [묶음 1] 썸네일 -->
-                <m:Avatar src="{image}" displaySize="L" displayShape="Square" class="sapUiSmallMarginEnd"/>
+                <core:Icon src="sap-icon://meal"
+                    size="2rem" width="4rem" height="4rem"
+                    color="#FFFFFF"
+                    backgroundColor="{= ${type} === '한식' ? '#4CAF50'
+                                    : ${type} === '중식' ? '#FF9800'
+                                    : ${type} === '일식' ? '#2196F3' : '#9C27B0' }"
+                    class="sapUiSmallMarginEnd"/>
 
                 <!-- [묶음 2] 기본 정보 -->
                 <m:VBox class = "sapUiSmallMarginEnd">

@@ -75,7 +75,13 @@
 							<!--ObjectIdentifier title="{food>Name}" Link="ddddd" /-->
 							<ObjectIdentifier title="{name}" />
                             <Text text="{store}" />
-                            <Text text="{type}" />
+                            <HBox alignItems="Center" justifyContent="Center">
+								<core:Icon src="sap-icon://meal" size="1rem" class="sapUiTinyMarginEnd"
+									color="{= ${type} === '한식' ? '#4CAF50'
+											: ${type} === '중식' ? '#FF9800'
+											: ${type} === '일식' ? '#2196F3' : '#9C27B0' }"/>
+								<Text text="{type}" />
+							</HBox>
 							<Text text="{
 							   path : 'star',
                        		   formatter : '.formatter.starNumber'

@@ -57,10 +57,10 @@
 					<Input id="idmenu" value="{edit>/age}" width="350px" placeholder="Ex) 베이컨 토마토 디럭스 세트"/>
 
 					<Label text="가격" />
-					<Input id="idprice" value="{edit>/grade_level}" width="350px" placeholder="숫자만 입력해주세요 Ex) 8700 "/>
+					<Input id="idprice" value="{edit>/grade_level}" type="Number" width="350px" placeholder="숫자만 입력해주세요 Ex) 8700 "/>
 
 					<Label text="후기" />
-					<TextArea id="idreview" value="{edit>/grade_level}" width="400px" height="100px" placeholder="Ex) 내부가 협소하고 시끄럽다... 매장 청결관리가 잘 되어있다..."/>
+					<TextArea id="idreview" value="{edit>/grade_level}" width="400px" height="100px" placeholder="Ex) 내부가 협소하고 시끄럽다... 맵기가 적당하다..."/>
 
 				</f:content>
 			</f:SimpleForm>
