@@ -1,7 +1,7 @@
 <mvc:View controllerName="project261105.controller.App"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:f="sap.f"
     displayBlock="true"
-    height="100%">
-    <f:FlexibleColumnLayout id="fcl" layout="{appView>/layout}" backgroundDesign="Solid" />
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m">
+    <App id="app">
+    </App>
 </mvc:View>

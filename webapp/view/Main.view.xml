@@ -18,7 +18,6 @@
 		<f:content>
 			<Table
 				id="productsTable"
-				mode="SingleSelectMaster"
 				itemPress=".onListItemPress"
 				inset="false"
 				items="{/food}"
@@ -26,13 +25,18 @@
 				width="auto">
 				<headerToolbar>
 					<OverflowToolbar>
+						<SearchField placeholder="메뉴 검색 (ex. 순대국밥)" search=".onSearch" width="17.5rem"/>
+						<OverflowToolbarButton icon="sap-icon://filter" type="Transparent" press=".onFilter"/>
 						<ToolbarSpacer/>
 						<OverflowToolbarButton icon="sap-icon://add" type="Transparent" press=".onAdd"/>
 						<OverflowToolbarButton icon="sap-icon://sort" type="Transparent" press=".onSort"/>
-					</OverflowToolbar>
+						<ToolbarSpacer/>
+						<Button text="데이터 추가" type="Accept" />
+						<Button text="데이터 삭제" type="Reject" />
+					</OverflowToolbar>	
 				</headerToolbar>
 				<columns>
-					<Column>
+					<Column hAlign="Center">
 						<Text text="메뉴" />
 					</Column>
 					<Column	hAlign="Center">
@@ -59,7 +63,7 @@
                				    press=".onHeaderPress('visit_again')"/>
     					</HBox>
 					</Column>    
-                    <Column	hAlign="End">
+                    <Column	hAlign="Center">
 						<Text text="위치" />
 					</Column>                                                           
 				</columns>

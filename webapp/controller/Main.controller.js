@@ -18,7 +18,6 @@ sap.ui.define([
              // 종류 선택 목록용 모델 (처음엔 빈 목록)
             this.getView().setModel(new JSONModel({ types: [] }), "typeList");
         },
-
         /* ===== [A] 목록 · 네비게이션 ===== */
         onListItemPress(oEvent) {
             const sPath = oEvent.getParameter("listItem").getBindingContext().getPath(); // "/food/3"
@@ -92,8 +91,25 @@ sap.ui.define([
         /* ===== [B] 검색 · 필터 · 정렬 ===== */
         // onUpdateFinished: function (oEvent) {
         // },
-        // onSearch: function (oEvent) {
-        // },
+        onSearch: function (oEvent) {
+            // 검색 창에 입력한 내용 불러오기
+			let sQuery = oEvent.getParameter("query");
+
+            // filter 배열 설정, data.json의 name(메뉴명) 속성값이 sQuery와 일치 여부를 검사하는 oFilter 선언
+            let aFilters = [];
+            let oFilter = new Filter("name", FilterOperator.Contains, sQuery);
+
+            // sQuery의 입력값 예외 확인
+			if (sQuery && sQuery.length > 0) {
+				aFilters.push(oFilter);
+			}
+
+            // Table 불러오기
+            let oTable = this.getView().byId("productsTable");
+
+            // Table에 filter 배열 적용하기
+			oTable.getBinding("items").filter(aFilters);
+		},
         // onTypeFilterChange: function (oEvent) {
         // },
         // onSortPress: function () {
