@@ -32,11 +32,27 @@ sap.ui.define([
             });
         },
         onHeaderPress : function(sField) {
-            // 같은 열을 다시 누르면 방향 반대로, 다른 열이면 내림차순(좋은 것부터)
-            this._bDesc = (this._sSortField === sField) ? !this._bDesc : true;
-            this._sSortField = sField;
+            if (this._sSortField === sField) {
+                // 같은 열을 다시 누르면 오름차순, 내림차순 전환
+                this._bDesc = !this._bDesc;
+            } else {
+                // 다른 열을 누르면 지금까지의 1순위를 2순위로 내려서 보관
+                this._sPrevField = this._sSortField;
+                this._bPrevDesc = this._bDesc;
 
-            let aSorters = [new Sorter(sField, this._bDesc)];
+                // 방금 누른 열을 1순위로 내림차순 정렬
+                this._sSortField = sField;
+                this._bDesc = true;
+            }
+
+            // 1순위 정렬 기준
+            let aSorters = [new Sorter(this._sSortField, this._bDesc)];
+
+            // 2순위가 있으면 뒤에 추가 (1순위가 같은 행끼리는 2순위로 비교)
+            if (this._sPrevField) {
+                aSorters.push(new Sorter(this._sPrevField, this._bPrevDesc));
+            }
+
             this.byId("productsTable").getBinding("items").sort(aSorters);
         },
         onFilter : function (oEvent) {
