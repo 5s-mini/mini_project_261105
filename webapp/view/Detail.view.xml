@@ -51,10 +51,7 @@
             <!-- [묶음 2] 정보 -->
             <m:VBox class = "sapUiSmallMarginEnd">
             <m:Text text = "별점 :" />
-                <m:Text text="{
-							   path : 'star',
-                       		   formatter : '.formatter.starNumber'
-							}" />
+                <m:Text id = "TitleStarText" text="" />
             </m:VBox>
 
             <!-- [묶음 3] 가성비 점수 정보 --> 
@@ -125,14 +122,16 @@
             </ObjectPageSubSection>
         </ObjectPageSection>
 
-        <!-- 별점 (TODO: RatingIndicator로 별 아이콘 표시 예정) -->
+        <!-- 별점 평균 -->
         <ObjectPageSection titleUppercase="false" title="별점">
             <ObjectPageSubSection>
                 <blocks>
-					 <m:Title text="{
-							   path : 'star',
-                       		   formatter : '.formatter.starNumber'
-							}" titleStyle="H2"/>
+					<m:Title id = "starMean" text="" titleStyle="H2"/>
+                    <m:VBox>
+                    <m:Title  text = "별점 평균"/>
+                    <m:Title id = "starRateText" text = "" titleStyle="H3"/>
+                    </m:VBox>
+
 			    </blocks>
             </ObjectPageSubSection>
         </ObjectPageSection>
@@ -155,7 +154,7 @@
                         <m:Input id = "commentInput" width="20rem" class="sapUiSmallMarginEnd"/>
                         <m:Button text = "입력 완료" press = "onCommentPress"/>
                     </m:HBox>
-                        <m:Table items = "{comments}">
+                        <m:Table  id = "commentTable" items = "{comments}">
                             <m:columns>
                                 <m:Column><m:Text text ="별점" /></m:Column>
                                 <m:Column><m:Text text ="닉네임" /></m:Column>
@@ -166,17 +165,17 @@
 						<m:cells>
 							<!--ObjectIdentifier title="{food>Name}" Link="ddddd" /-->
 							<m:Text text="{
-							   path : 'star',
+							   path : 'CommentStar',
                        		   formatter : '.formatter.starNumber'
 							}" />
                             <m:Text text="{name}" />
                             <m:Text text="{comment}" />                         
 						</m:cells>
 					</m:ColumnListItem>
-				</m:items>
+				    </m:items>
                         </m:Table>
                     </m:VBox>
-			    </blocks>
+	            </blocks>
             </ObjectPageSubSection>
         </ObjectPageSection>
     </sections>
