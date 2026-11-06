@@ -141,17 +141,39 @@
                 <blocks>
                 <m:VBox>
                     <m:HBox>
-                    <m:ComboBox placeholder="별점 선택" width="10rem">
+                    <m:ComboBox id = "starRate" width="10rem" selectedKey = "5">
                         <core:Item key="1" text="★☆☆☆☆ (1점)"/>
                         <core:Item key="2" text="★★☆☆☆ (2점)"/>
                         <core:Item key="3" text="★★★☆☆ (3점)"/>
                         <core:Item key="4" text="★★★★☆ (4점)"/>
                         <core:Item key="5" text="★★★★★ (5점)"/>
                     </m:ComboBox>
-                        <m:Input width="20rem"/>
-                       <m:Button text = "입력 완료" />
+                        <m:Text text = "이름 : " class="sapUiTinyMarginEnd"/>
+                        <m:Input id = "commentName" width="10rem" class="sapUiSmallMarginEnd"/>
+                        <m:Text text = "댓글 : " class="sapUiTinyMarginEnd"/>
+                        <m:Input id = "commentInput" width="20rem" class="sapUiSmallMarginEnd"/>
+                        <m:Button text = "입력 완료" press = "onCommentPress"/>
                     </m:HBox>
-                        <m:Text text = "여기 댓글 출력"/>
+                        <m:Table items = "{comments}">
+                            <m:columns>
+                                <m:Column><m:Text text ="별점" /></m:Column>
+                                <m:Column><m:Text text ="닉네임" /></m:Column>
+                                <m:Column><m:Text text ="댓글" /></m:Column>
+                            </m:columns>
+                    <m:items>
+					<m:ColumnListItem>
+						<m:cells>
+							<!--ObjectIdentifier title="{food>Name}" Link="ddddd" /-->
+							<m:Text text="{
+							   path : 'star',
+                       		   formatter : '.formatter.starNumber'
+							}" />
+                            <m:Text text="{name}" />
+                            <m:Text text="{comment}" />                         
+						</m:cells>
+					</m:ColumnListItem>
+				</m:items>
+                        </m:Table>
                     </m:VBox>
 			    </blocks>
             </ObjectPageSubSection>

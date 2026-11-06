@@ -19,16 +19,14 @@ sap.ui.define([
              // 종류 선택 목록용 모델 (처음엔 빈 목록)
             this.getView().setModel(new JSONModel({ types: [] }), "typeList");
         },
+        /* ===== [A] 목록 · 네비게이션 ===== */
         onListItemPress(oEvent) {
-            // 선택한 행의 경로 가져오기
             const sPath = oEvent.getParameter("listItem").getBindingContext().getPath(); // "/food/3"
-
-            // 행 번호만 가져오기
             const sFoodId = sPath.split("/").pop();
 
-            // Detail 페이지 주소 지정
             this.getOwnerComponent().getRouter().navTo("RouteDetail", {
-                paramId: sFoodId
+                paramId: sFoodId,
+                layout: "TwoColumnsMidExpanded"
             });
         },
         onHeaderPress : function(sField) {
@@ -86,6 +84,14 @@ sap.ui.define([
             // 4. Popover 닫기
             this.byId("Filter").close();
         },
+
+
+
+        /* ===== [A] end ===== */
+
+        /* ===== [B] 검색 · 필터 · 정렬 ===== */
+        // onUpdateFinished: function (oEvent) {
+        // },
         onSearch: function (oEvent) {
             // 검색 창에 입력한 내용 불러오기
 			let sQuery = oEvent.getParameter("query");
@@ -109,130 +115,64 @@ sap.ui.define([
             // Table에 filter 배열 적용하기
 			oTable.getBinding("items").filter(aFilters);
 		},
-        onRandom: function (oEvent) {
-            // 현재 모델의 데이터 가져오기
-            let oModel = this.getView().getModel().getData();
-
-            // food 배열의 길이 가져오기
-            let nMax = oModel.food.length;
-
-            // 배열의 길이만큼 랜덤한 숫자를 뽑는 getRandomInt 함수 호출
-            let nRandom = this.getRandomInt(0, nMax - 1);
-
-            if (!this.pRandomDialog) {
-                // Random Dialog 로드
-                this.pRandomDialog = this.loadFragment({
-                    name: "project261105.view.fragment.Random"
-                })
-            }
-
-            // Dialog가 로드됐을 때
-            this.pRandomDialog.then((oDialog) => {
-                // Dialog에 랜덤한 번호의 행 가져오기
-                oDialog.bindElement("/food/" + nRandom);
-
-                // Dialog 열기
-                oDialog.open();
-            });
-        },
-        getRandomInt: (min, max) => {
-            // 랜덤 숫자 반환하기
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        },
-        onCloseRandomDialog: function() {
-            // Random Dialog 닫기
-            this.byId("idRandomDialog").close();
-        },
         onOpenMap: function (oEvent) {
-            // 상호명 가져오기
             let sStore = oEvent.getSource().getBindingContext().getProperty("store");
-
-            // 상호명을 UTF-8로 인코딩하기
             let sQuery = encodeURIComponent(sStore);
-
-            // 지도의 검색 결과에 인코딩된 상호명을 조합하여 주소 만들기
             let sUrl = "https://map.naver.com/p/search/" + sQuery;
 
-            // URLHelper를 불러와서 지도 검색 결과 주소를 새 창으로 열기
-            mobileLibrary.URLHelper.redirect(sUrl, true);
+            let URLHelper = mobileLibrary.URLHelper;
+            URLHelper.redirect(sUrl, true);
         },
-        onAddDialog: function () {
-            let oDialog = sap.ui.getCore().byId("idDialog");              // 학생 관리 Dialog가 이미 만들어져 있는지 id로 찾는다 (없으면 undefined)
+        onDelete : function() {
+            let oTable = this.byId("productsTable");
+            let aSelect = oTable.getSelectedItems();   // [[0]{}, [4]{}, [5]{}]
 
-            // Dialog Fragment 파일 저장해두기
-            if(oDialog) {
-                oDialog.setTitle("맛집 추가");
-                sap.ui.getCore().byId("idDialogBtn").setText("추가");
-                
-                let addName = sap.ui.getCore().byId("idname").setValue();
-                let addStore = sap.ui.getCore().byId("idstore").setValue();
-                let addType = sap.ui.getCore().byId("idtype").setSelectedKey();
-                let addStars = sap.ui.getCore().byId("idstars").setSelectedKey();
-                let addRevisit = sap.ui.getCore().byId("idrevisit").setSelectedKey();
-                let addImgurl = sap.ui.getCore().byId("idimgurl").setValue();
-
-                let addMenu = sap.ui.getCore().byId("idmenu").setValue();
-                let addPrice = sap.ui.getCore().byId("idprice").setValue();
-                let addReview = sap.ui.getCore().byId("idreview").setValue();
-
-                oDialog.open();
-
+            // 체크 안하면 에러메시지 나
+            // 복수(getSelectedItems)일때는 빈 배열(!aSelect)은 참이기 때문에 항상 false가 되므로 length로 확인
+            if(aSelect.length === 0){      
+                sap.m.MessageToast.show("삭제할 행을 선택하세요.");
                 return;
             }
 
-            Fragment.load({
-                name : "project261105.view.fragment.Dialog",              // 불러올 파일 위치 (webapp/view/fragment/Dialoged.fragment.xml)
-                type : "XML",                                               // 파일 형식
-                controller : this,                                          // Dialog 안 이벤트 함수는 Main 컨트롤러에서 찾도록 연결
-            }).then(function(oDialog) {                                     // 파일을 다 읽어서 Dialog가 만들어지면 실행
-                oDialog.setTitle("맛집 추가");
-                sap.ui.getCore().byId("idDialogBtn").setText("추가");
-                oDialog.open();
-            });
-        },
-        onSaveDialogBtn: function () {
-            let addName = sap.ui.getCore().byId("idname").getValue();
-            let addStore = sap.ui.getCore().byId("idstore").getValue();
-            let addType = sap.ui.getCore().byId("idtype").getSelectedKey();
-            let addStars = sap.ui.getCore().byId("idstars").getSelectedKey();
-            let addRevisit = sap.ui.getCore().byId("idrevisit").getSelectedKey();
-            let addImgurl = sap.ui.getCore().byId("idimgurl").getValue();
-            let addMenu = sap.ui.getCore().byId("idmenu").getValue();
-            let addPrice = sap.ui.getCore().byId("idprice").getValue();
-            let addReview = sap.ui.getCore().byId("idreview").getValue();
-
-            if (addName === "" || addStore === "" || addType === "" || addStars === "" ||
-            addRevisit === "" || addImgurl === "" || addMenu === "" || addPrice === "" ||
-            addReview === "") {
-                MessageBox.warning("모든 항목을 입력해주세요.");
-                return;
+            // 1. 선택행 위치 번호 배열안에 모으기
+            let aIndx = [];     // for문의 결과는 [1,3,7] 이렇게 쌓임
+            for(let i=0; i < aSelect.length ; i++){
+                let sPath = aSelect[i].getBindingContext().getPath();  // ex. /food/1
+                aIndx.push(Number(sPath.split("/").pop()))
             }
 
-            let oNewFood = {
-                name: addName,
-                store: addStore,
-                type: addType,
-                star: Number(addStars),
-                visit_again: addRevisit === "true",
-                image: addImgurl,
-                detail: [
-                    {
-                        menu: addMenu,
-                        price: Number(addPrice),
-                        review: addReview
-                    }
-                ]
-            };
-            let AddModel = this.getView().getModel();
-            let aFood = AddModel.getProperty("/food");
-            aFood.push(oNewFood);
-            AddModel.setProperty("/food", aFood);
+            // 2. 삭제할 번호 외의 객체만 남김
+            let oModel = this.getView().getModel();
+            let aFood = oModel.getProperty("/food");
+            let aNew = aFood.filter((o, idx) => !aIndx.includes(idx));
+                // includes (배열에 값이 있으면 true, 없으면 false) aIndx 값 돌리기
+                // filter (객체, 번호) (food 모델 내 객체를 보며 false인거만 골라줌)
 
-            MessageToast.show("맛집이 추가되었습니다♥");
-            this.onCloseDialogBtn();
-        },
-        onCloseDialogBtn() {
-            sap.ui.getCore().byId("idDialog").close();
+
+            // 3. 새로 만든 객체 배열 모델에 넣고 체크 해제
+            oModel.setProperty("/food", aNew)
+            oTable.removeSelections(true);  // 선택한 항목 해제하는 함수
+            sap.m.MessageToast.show("삭제했습니다.");
         }
+        // onTypeFilterChange: function (oEvent) {
+        // },
+        // onSortPress: function () {
+        // },
+        // _applyFilters: function () {
+        // },
+        // /* ===== [B] end ===== */
+
+        // /* ===== [D] 추가 · 삭제 · 뽑기 ===== */
+        // onOpenAddDialog: function () {
+        // },
+        // onSaveAdd: function () {
+        // },
+        // onCancelAdd: function () {
+        // },
+        // onDelete: function (oEvent) {
+        // },
+        // onRandomPick: function () {
+        // }
+        /* ===== [D] end ===== */
     });
 });
