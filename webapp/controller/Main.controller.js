@@ -92,11 +92,15 @@ sap.ui.define([
 
             // filter 배열 설정, data.json의 name(메뉴명) 속성값이 sQuery와 일치 여부를 검사하는 oFilter 선언
             let aFilters = [];
-            let oFilter = new Filter("name", FilterOperator.Contains, sQuery);
+            let oNameFilter = new Filter("name", FilterOperator.Contains, sQuery),
+                oStoreFilter = new Filter("store", FilterOperator.Contains, sQuery);
 
             // sQuery의 입력값 예외 확인
-			if (sQuery && sQuery.length > 0) {
-				aFilters.push(oFilter);
+			if (sQuery) {
+				aFilters.push(new Filter({
+					filters: [oNameFilter, oStoreFilter],
+					and: false
+				}));
 			}
 
             // Table 불러오기

@@ -3,13 +3,13 @@
     <Dialog id="idRandomDialog"
             class="sapUiContentPadding"
             title="랜덤 뽑기 결과"
-            contentWidth="20rem"
+            contentWidth="30rem"
             draggable="true"
             resizable="true">
         <content>
             <VBox alignItems="Center">
                 <Text text="축하합니다 오늘의 식당은~" class="sapUiSmallMarginBottom"/>
-                <Title text="{store}" level="H1" wrapping="true" textAlign="Center"/>
+                <Title text="{store}" titleStyle="H2" wrapping="true" textAlign="Center" width="auto"/>
             </VBox>
         </content>
         <endButton>
