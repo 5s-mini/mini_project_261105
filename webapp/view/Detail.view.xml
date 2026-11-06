@@ -28,7 +28,8 @@
 						id="AttentionIconButton"
 						icon="sap-icon://edit"
 						type="Emphasized" 
-                        text = "리뷰 수정"/>
+                        text = "리뷰 수정"
+                        press=".onEditBtn"/>
             </actions>
 
         </ObjectPageDynamicHeaderTitle>
