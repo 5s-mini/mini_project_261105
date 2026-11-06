@@ -22,7 +22,11 @@
 				inset="false"
 				items="{/food}"
 				class="sapFDynamicPageAlignContent"
-				width="auto">
+				width="auto"
+				mode="MultiSelect"
+				sticky="HeaderToolbar,ColumnHeaders"
+      			alternateRowColors="true"
+				>
 				<headerToolbar>
 					<OverflowToolbar>
 						<SearchField placeholder="메뉴 또는 상호 검색" search=".onSearch" width="15rem"/>
@@ -30,14 +34,14 @@
 						<Button text="랜덤 뽑기" type="Emphasized" icon="sap-icon://synchronize" press=".onRandom" />
 						<ToolbarSpacer/>
 						<Button text="데이터 추가" type="Accept" press="onAddDialog" />
-						<Button text="데이터 삭제" type="Reject" />
+						<Button text="데이터 삭제" type="Reject" press=".onDelete" />
 					</OverflowToolbar>	
 				</headerToolbar>
 				<columns>
 					<Column hAlign="Center">
 						<Text text="메뉴" />
 					</Column>
-					<Column	hAlign="Center" width="18rem">
+					<Column	hAlign="Center">
 						<Text text="상호" />
 					</Column>
 					<Column	hAlign="Center">
@@ -70,7 +74,7 @@
 						<cells>
 							<!--ObjectIdentifier title="{food>Name}" Link="ddddd" /-->
 							<Text text="{name}" />
-                            <Text text="{store}" width="auto" />
+                            <Text text="{store}" />
                             <Text text="{type}" />
 							<Text text="{
 							   path : 'star',

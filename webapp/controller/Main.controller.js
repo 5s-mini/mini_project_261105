@@ -233,6 +233,36 @@ sap.ui.define([
         },
         onCloseDialogBtn() {
             sap.ui.getCore().byId("idDialog").close();
+        },
+        onDelete : function() {
+            let oTable = this.byId("productsTable");
+            let aSelect = oTable.getSelectedItems();   // [[0]{}, [4]{}, [5]{}]
+
+            // 체크 안하면 에러메시지 나
+            // 복수(getSelectedItems)일때는 빈 배열(!aSelect)은 참이기 때문에 항상 false가 되므로 length로 확인
+            if(aSelect.length === 0){      
+                sap.m.MessageToast.show("삭제할 행을 선택하세요.");
+                return;
+            }
+            // 1. 선택행 위치 번호 배열안에 모으기
+            let aIndx = [];     // for문의 결과는 [1,3,7] 이렇게 쌓임
+            for(let i=0; i < aSelect.length ; i++){
+                let sPath = aSelect[i].getBindingContext().getPath();  // ex. /food/1
+                aIndx.push(Number(sPath.split("/").pop()))
+            }
+
+            // 2. 삭제할 번호 외의 객체만 남김
+            let oModel = this.getView().getModel();
+            let aFood = oModel.getProperty("/food");
+            let aNew = aFood.filter((o, idx) => !aIndx.includes(idx));
+                // includes (배열에 값이 있으면 true, 없으면 false) aIndx 값 돌리기
+                // filter (객체, 번호) (food 모델 내 객체를 보며 false인거만 골라줌)
+
+
+            // 3. 새로 만든 객체 배열 모델에 넣고 체크 해제
+            oModel.setProperty("/food", aNew)
+            oTable.removeSelections(true);  // 선택한 항목 해제하는 함수
+            sap.m.MessageToast.show("삭제했습니다.");
         }
     });
 });
