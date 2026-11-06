@@ -146,13 +146,13 @@
                 <blocks>
                 <m:VBox>
                     <m:HBox>
-                    <m:ComboBox id = "starRate" width="10rem" selectedKey = "5">
+                    <m:Select id = "starRate" width="10rem" selectedKey = "5">
                         <core:Item key="1" text="★☆☆☆☆ (1점)"/>
                         <core:Item key="2" text="★★☆☆☆ (2점)"/>
                         <core:Item key="3" text="★★★☆☆ (3점)"/>
                         <core:Item key="4" text="★★★★☆ (4점)"/>
                         <core:Item key="5" text="★★★★★ (5점)"/>
-                    </m:ComboBox>
+                    </m:Select>
                         <m:Text text = "이름 : " class="sapUiTinyMarginEnd"/>
                         <m:Input id = "commentName" width="10rem" class="sapUiSmallMarginEnd"/>
                         <m:Text text = "댓글 : " class="sapUiTinyMarginEnd"/>

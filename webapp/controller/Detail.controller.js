@@ -39,34 +39,45 @@ sap.ui.define([
         onCommentPress: function(){
             let oModel = this.getView().getModel();
            
-             let commentName = this.byId("commentName").getValue();
-             let commentInput = this.byId("commentInput").getValue();
+             let commentName = this.byId("commentName").getValue().trim();
+             let commentInput = this.byId("commentInput").getValue().trim();
              let StarRateCombo = Number(this.byId("starRate").getSelectedKey());
+
+             //이름과 댓글 모두 작성이 되야 댓글 적용
+
+             if(!commentName||!commentInput){
+                sap.m.MessageToast.show("이름과 댓글을 모두 입력해 주세요");
+                return;
+             }
+
 
             // 현재 화면에 연결된 맛집 경로 뒤에 /comments를 붙여 댓글들이 저장된 경로 지정
             // ex) "/food/0" + "/comments" → "/food/0/comments"
-             const sPath = this.getView().getBindingContext().getPath() + "/comments"; //"/food/0/comments"
+            const sPath = this.getView().getBindingContext().getPath() + "/comments"; //"/food/0/comments"
 
-             //해당 경로에 있는 배열 가져오기
-             let aComments = oModel.getProperty(sPath);
+            //해당 경로에 있는 배열 가져오기
+            let aComments = oModel.getProperty(sPath);
 
-             //경로에 배열이 없으면 /comments라는 경로에 빈 배열을 하나 만듦
-             if (!aComments) {
+            //경로에 배열이 없으면 /comments라는 경로에 빈 배열을 하나 만듦
+            if (!aComments) {
                   aComments = [];
                  }
 
-             // 댓글정보들을 해당 배열에 삽입시킴 
-             aComments.push({ CommentStar   : StarRateCombo, name: commentName, comment: commentInput });
+            // 댓글정보들을 해당 배열에 삽입시킴 
+            aComments.push({ CommentStar   : StarRateCombo, name: commentName, comment: commentInput });
 
-             // 수정한 배열을 /comments에 교체
+            // 수정한 배열을 /comments에 교체
              oModel.setProperty(sPath, aComments);
 
-             //별점 평균 업데이트
+            //별점 평균 업데이트
              this.onStarMean()
              
              //input 초기화
-             this.byId("commentName").setValue("");
-             this.byId("commentInput").setValue("");
+            this.byId("commentName").setValue("");
+            this.byId("commentInput").setValue("");
+            
+            sap.m.MessageToast.show("댓글 입력 완료!");
+                    
 
         },
 
