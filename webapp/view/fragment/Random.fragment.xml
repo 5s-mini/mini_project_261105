@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core"
+                         xmlns="sap.m">
+    <Dialog id="idRandomDialog"
+            class="sapUiContentPadding"
+            title="랜덤 뽑기 결과"
+            contentWidth="20rem"
+            draggable="true"
+            resizable="true">
+        <content>
+            <VBox alignItems="Center">
+                <Text text="축하합니다 오늘의 식당은~" class="sapUiSmallMarginBottom"/>
+                <Title text="{store}" level="H1" wrapping="true" textAlign="Center"/>
+            </VBox>
+        </content>
+        <endButton>
+            <Button text="닫기"
+                    press=".onCloseRandomDialog" />
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

@@ -19,7 +19,6 @@ sap.ui.define([
              // 종류 선택 목록용 모델 (처음엔 빈 목록)
             this.getView().setModel(new JSONModel({ types: [] }), "typeList");
         },
-        /* ===== [A] 목록 · 네비게이션 ===== */
         onListItemPress(oEvent) {
             const sPath = oEvent.getParameter("listItem").getBindingContext().getPath(); // "/food/3"
             const sFoodId = sPath.split("/").pop();
@@ -84,14 +83,6 @@ sap.ui.define([
             // 4. Popover 닫기
             this.byId("Filter").close();
         },
-
-
-
-        /* ===== [A] end ===== */
-
-        /* ===== [B] 검색 · 필터 · 정렬 ===== */
-        // onUpdateFinished: function (oEvent) {
-        // },
         onSearch: function (oEvent) {
             // 검색 창에 입력한 내용 불러오기
 			let sQuery = oEvent.getParameter("query");
@@ -111,6 +102,31 @@ sap.ui.define([
             // Table에 filter 배열 적용하기
 			oTable.getBinding("items").filter(aFilters);
 		},
+        onRandom: function (oEvent) {
+            let oModel = this.getView().getModel().getData();
+            let nMax = oModel.food.length;
+            let nRandom = this.getRandomInt(1, nMax - 1);
+
+            if (!this.pRandomDialog) {
+                // Random Dialog 로드
+                this.pRandomDialog = this.loadFragment({
+                    name: "project261105.view.fragment.Random"
+                })
+            }
+
+            // Dialog가 로드됐을 때
+            this.pRandomDialog.then((oDialog) => {
+                // Dialog 열기
+                oDialog.bindElement("/food/" + nRandom);
+                oDialog.open();
+            });
+        },
+        getRandomInt: (min, max) => {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+        onCloseRandomDialog: function() {
+            this.byId("idRandomDialog").close();
+        },
         onOpenMap: function (oEvent) {
             let sStore = oEvent.getSource().getBindingContext().getProperty("store");
             let sQuery = encodeURIComponent(sStore);
