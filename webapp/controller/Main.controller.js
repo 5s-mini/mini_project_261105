@@ -20,12 +20,15 @@ sap.ui.define([
             this.getView().setModel(new JSONModel({ types: [] }), "typeList");
         },
         onListItemPress(oEvent) {
+            // 선택한 행의 경로 가져오기
             const sPath = oEvent.getParameter("listItem").getBindingContext().getPath(); // "/food/3"
+
+            // 행 번호만 가져오기
             const sFoodId = sPath.split("/").pop();
 
+            // Detail 페이지 주소 지정
             this.getOwnerComponent().getRouter().navTo("RouteDetail", {
-                paramId: sFoodId,
-                layout: "TwoColumnsMidExpanded"
+                paramId: sFoodId
             });
         },
         onHeaderPress : function(sField) {
@@ -103,9 +106,14 @@ sap.ui.define([
 			oTable.getBinding("items").filter(aFilters);
 		},
         onRandom: function (oEvent) {
+            // 현재 모델의 데이터 가져오기
             let oModel = this.getView().getModel().getData();
+
+            // food 배열의 길이 가져오기
             let nMax = oModel.food.length;
-            let nRandom = this.getRandomInt(1, nMax - 1);
+
+            // 배열의 길이만큼 랜덤한 숫자를 뽑는 getRandomInt 함수 호출
+            let nRandom = this.getRandomInt(0, nMax - 1);
 
             if (!this.pRandomDialog) {
                 // Random Dialog 로드
@@ -116,24 +124,33 @@ sap.ui.define([
 
             // Dialog가 로드됐을 때
             this.pRandomDialog.then((oDialog) => {
-                // Dialog 열기
+                // Dialog에 랜덤한 번호의 행 가져오기
                 oDialog.bindElement("/food/" + nRandom);
+
+                // Dialog 열기
                 oDialog.open();
             });
         },
         getRandomInt: (min, max) => {
+            // 랜덤 숫자 반환하기
             return Math.floor(Math.random() * (max - min + 1)) + min;
         },
         onCloseRandomDialog: function() {
+            // Random Dialog 닫기
             this.byId("idRandomDialog").close();
         },
         onOpenMap: function (oEvent) {
+            // 상호명 가져오기
             let sStore = oEvent.getSource().getBindingContext().getProperty("store");
+
+            // 상호명을 UTF-8로 인코딩하기
             let sQuery = encodeURIComponent(sStore);
+
+            // 지도의 검색 결과에 인코딩된 상호명을 조합하여 주소 만들기
             let sUrl = "https://map.naver.com/p/search/" + sQuery;
 
-            let URLHelper = mobileLibrary.URLHelper;
-            URLHelper.redirect(sUrl, true);
+            // URLHelper를 불러와서 지도 검색 결과 주소를 새 창으로 열기
+            mobileLibrary.URLHelper.redirect(sUrl, true);
         },
         onAddDialog: function () {
             let oDialog = sap.ui.getCore().byId("idDialog");              // 학생 관리 Dialog가 이미 만들어져 있는지 id로 찾는다 (없으면 undefined)
@@ -213,21 +230,5 @@ sap.ui.define([
         onCloseDialogBtn() {
             sap.ui.getCore().byId("idDialog").close();
         }
-        // onTypeFilterChange: function (oEvent) {
-        // },
-        // onSortPress: function () {
-        // },
-        // _applyFilters: function () {
-        // },
-        // /* ===== [B] end ===== */
-
-        // /* ===== [D] 추가 · 삭제 · 뽑기 ===== */
-        // onCancelAdd: function () {
-        // },
-        // onDelete: function (oEvent) {
-        // },
-        // onRandomPick: function () {
-        // }
-        /* ===== [D] end ===== */
     });
 });
