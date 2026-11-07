@@ -182,6 +182,8 @@
                                 <m:Column width="10rem"><m:Text text="별점" /></m:Column>                  <!-- 🔧 (J) -->
                                 <m:Column width="10rem"><m:Text text="닉네임" /></m:Column>                <!-- 🔧 (J) -->
                                 <m:Column><m:Text text="댓글" /></m:Column>                                <!-- 그대로 -->
+                                <m:Column width="6rem"><m:Text text="작성날짜" /></m:Column>
+                                <m:Column width="5rem"><m:Text text="작성시간" /></m:Column>
                             </m:columns>
                             <m:items>
                                 <m:ColumnListItem>
@@ -195,7 +197,9 @@
                                             <core:Icon src="sap-icon://customer" size="1.2rem" color="Neutral" class="sapUiTinyMarginEnd"/>
                                             <m:Text text="{name}" />
                                         </m:HBox>
-                                        <m:Text text="{comment}" />                         
+                                        <m:Text text="{comment}" />
+                                        <m:Text text="{date}" />   
+                                        <m:Text text="{time}" />                        
                                     </m:cells>
                                 </m:ColumnListItem>
                             </m:items>
