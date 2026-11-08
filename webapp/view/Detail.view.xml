@@ -177,7 +177,7 @@
                             <m:Input id="commentInput" width="20rem" placeholder="댓글을 입력하세요" class="sapUiTinyMarginEnd"/>
                             <m:Button text="등록" icon="sap-icon://paper-plane" type="Emphasized" press="onCommentPress"/>
                         </m:HBox >
-                        <m:Table id="commentTable" items="{comments}" noDataText="아직 댓글이 없어요. 첫 댓글을 남겨주세요!" alternateRowColors="true">                                               <!-- 🔧 (I) -->
+                        <m:Table id="commentTable" items="{comments}" noDataText="아직 댓글이 없어요. 첫 댓글을 남겨주세요!" alternateRowColors="true" mode = "Delete" delete = "onCommentDelete">                                               <!-- 🔧 (I) -->
                             <m:columns>
                                 <m:Column width="10rem"><m:Text text="별점" /></m:Column>                  <!-- 🔧 (J) -->
                                 <m:Column width="10rem"><m:Text text="닉네임" /></m:Column>                <!-- 🔧 (J) -->
@@ -199,7 +199,7 @@
                                         </m:HBox>
                                         <m:Text text="{comment}" />
                                         <m:Text text="{date}" />   
-                                        <m:Text text="{time}" />                        
+                                        <m:Text text="{time}" />                     
                                     </m:cells>
                                 </m:ColumnListItem>
                             </m:items>

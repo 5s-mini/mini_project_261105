@@ -246,9 +246,23 @@ sap.ui.define([
             this.byId("starRateText").setText(meanStarValue.toFixed(1)) //별점 숫자 업데이트
 
             //메인모델에 반영하기
-            this.getView().getModel().setProperty(sPath+"/star",meanStarIconValue);
+            this.getView().getModel().setProperty(sPath + "/meanStar", meanStarIconValue);
             
-        }
+        },
+        onCommentDelete : function(oEvent) {
+            //댓글 삭제를 눌렀을때 작동하는 버튼
+             let delPath = oEvent.getParameters().listItem.getBindingContext().getPath(); //'/food/7/comments/0'
+            // this.getOwnerComponent().getModel().getProperty(delPath+"/comments");
+            let aDelPath = delPath.split("/");
+            let delNum = aDelPath.pop(); //숫자 뽑아오기 0
+
+            let sPath = this.getView().getBindingContext().getPath() + "/comments"; //'/food/7/comments'
+            let aComment = this.getOwnerComponent().getModel().getProperty(sPath); //댓글 배열 뽑아오기
+            aComment.splice(delNum,1);
+            this.getOwnerComponent().getModel().setProperty(sPath,aComment);
+
+            this.onStarMean();
+         }
 
     });
 });
