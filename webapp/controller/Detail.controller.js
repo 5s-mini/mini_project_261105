@@ -113,7 +113,11 @@ sap.ui.define([
                 this.byId("idname").setValue(oFood.name);
                 this.byId("idstore").setValue(oFood.store);
                 this.byId("idtype").setSelectedKey(oFood.type);
-                this.byId("idstars").setSelectedKey(String(oFood.star));
+            
+                // Dialog 별점에는 평균이 아닌 원래 리뷰 별점을 표시
+                // originalStar는 Detail에서 평균 계산 후 생기므로, 아직 없으면 star가 원래 별점
+                this.byId("idstars").setSelectedKey(String(oFood.originStar || oFood.star));
+
                 this.byId("idrevisit").setSelectedKey(String(oFood.visit_again));
                 this.byId("idimgurl").setValue(oFood.image);
                 this.byId("idmenu").setValue(oFood.detail[0].menu);
@@ -142,7 +146,12 @@ sap.ui.define([
                 this.byId("idname").setValue(oFood.name);
                 this.byId("idstore").setValue(oFood.store);
                 this.byId("idtype").setSelectedKey(oFood.type);
-                this.byId("idstars").setSelectedKey(String(oFood.star));
+
+                // 수정
+                // Dialog 별점에는 평균이 아닌 원래 리뷰 별점을 표시
+                // (originalStar는 Detail에서 평균 계산 후 생기므로, 아직 없으면 star가 원래 별점)
+                this.byId("idstars").setSelectedKey(String(oFood.originStar || oFood.star));
+
                 this.byId("idrevisit").setSelectedKey(String(oFood.visit_again));
                 this.byId("idimgurl").setValue(oFood.image);
                 this.byId("idmenu").setValue(oFood.detail[0].menu);
@@ -191,6 +200,10 @@ sap.ui.define([
                 ]
             };
 
+            //리뷰 수정 시 댓글이 지워지는 현상 fix
+            const oOldFood = this.getView().getModel().getProperty(this.sPath);
+            oEditFood.comments = oOldFood.comments || [];   //수정 전 모델에서 댓글 배열을 가져와서 댓글 유지, 없으면 빈 배열
+
             // onEditBtn에서 저장해둔 위치("/food/3")의 데이터를 새 데이터로 덮어씀
             // → 화면이 이 위치에 연결되어 있어서 Detail 화면과 Main 목록이 자동으로 바뀜
             this.getView().getModel().setProperty(this.sPath, oEditFood);
@@ -221,46 +234,70 @@ sap.ui.define([
             //배열 길이 구하기
             let commentLength = aCommentsData.length;
             
-            
             let oModel = this.getOwnerComponent().getModel(); //메인모델 불러오기
 
              // 현재 화면에 연결된 맛집 경로 (예: "/food/0")
             let sPath = this.getView().getBindingContext().getPath();  
 
-            // 원래 리뷰 작성자가 준 별점 sum의 기본값으로 설정(data.json의 star)
-            let reviewStar = oModel.getProperty(sPath+"/star");
-            let sum = reviewStar;
+            // 원래 리뷰 작성자가 준 별점(originStar) 가져오기
+            // star에는 평균이 덮어써지므로, 평균 계산의 기준이 될 원래 별점을 따로 보관
+            let originStar = oModel.getProperty(sPath+"/originStar");
+
+            // 처음 계산할 때(또는 맛집 수정 직후)는 originStar가 아직 없음
+            // 이때의 star는 아직 평균이 아닌 원래 별점이므로 originStar로 복사해서 보관
+            if (originStar === undefined){
+                let reviewStar = oModel.getProperty(sPath+"/star");
+                oModel.setProperty(sPath+"/originStar",reviewStar);
+
+                originStar = reviewStar;
+            }
+
+            // 원래 리뷰 작성자가 준 별점 sum의 기본값으로 설정
+            let sum = originStar;
             
              // 댓글들의 별점을 하나씩 더함
             for(let i = 0; i<commentLength; i++){
                 sum = sum+aCommentsData[i].CommentStar;
             }
             
-            //평균 구하기
+            // 평균 = 합계 ÷ 전체 개수 (원래 리뷰 1개 + 댓글 수)
+            // 예: 원래 4점 + 댓글 5점, 3점 → (4+5+3) / 3 = 4.0
             let meanStarValue = sum/(commentLength+1);
+
+            // starNumber는 1~5만 처리하므로 반올림 (3.5 → 4)
             let meanStarIconValue = Math.round(meanStarValue);
 
             let sStar = formatter.starNumber(meanStarIconValue); //포메터 적용
-            this.byId("starMean").setText(sStar); //별점 내용 수정
-            this.byId("TitleStarText").setText(sStar); //상단 별점 수정
-            this.byId("starRateText").setText(meanStarValue.toFixed(1)) //별점 숫자 업데이트
+            this.byId("starMean").setText(sStar);                //별점 내용 수정
+            this.byId("TitleStarText").setText(sStar);           //헤더 별점 수정
+            this.byId("starRateText").setText(meanStarValue.toFixed(1)) //소수점 평균
 
-            //메인모델에 반영하기
-            this.getView().getModel().setProperty(sPath + "/meanStar", meanStarIconValue);
+            // 평균을 star에 저장 → Main 목록 별점도 평균으로 표시됨
+            //원래 별점은 originStar에 따로 보관
+            this.getView().getModel().setProperty(sPath + "/star", meanStarIconValue);
             
         },
         onCommentDelete : function(oEvent) {
-            //댓글 삭제를 눌렀을때 작동하는 버튼
-             let delPath = oEvent.getParameters().listItem.getBindingContext().getPath(); //'/food/7/comments/0'
-            // this.getOwnerComponent().getModel().getProperty(delPath+"/comments");
-            let aDelPath = delPath.split("/");
-            let delNum = aDelPath.pop(); //숫자 뽑아오기 0
+            // 댓글 Table의 삭제 버튼을 눌렀을 때 실행
 
-            let sPath = this.getView().getBindingContext().getPath() + "/comments"; //'/food/7/comments'
-            let aComment = this.getOwnerComponent().getModel().getProperty(sPath); //댓글 배열 뽑아오기
+            // 삭제 버튼을 누른 행의 경로 '/food/7/comments/0'
+            let delPath = oEvent.getParameters().listItem.getBindingContext().getPath();
+            
+            // 경로를 "/"로 나눠 마지막 값(댓글 순번)만 꺼냄 → "0"
+            let aDelPath = delPath.split("/");
+            let delNum = aDelPath.pop();
+
+            // 현재 맛집의 댓글 배열 경로 '/food/7/comments'
+            let sPath = this.getView().getBindingContext().getPath() + "/comments"; 
+
+            // 댓글 배열을 꺼내서 해당 순번의 댓글 1개 삭제
+            let aComment = this.getOwnerComponent().getModel().getProperty(sPath);
             aComment.splice(delNum,1);
+
+            // 삭제된 배열을 다시 저장 -> 댓글 Table 자동 갱신
             this.getOwnerComponent().getModel().setProperty(sPath,aComment);
 
+            // 댓글이 줄었으니 별점 평균 다시 계산
             this.onStarMean();
          }
 
