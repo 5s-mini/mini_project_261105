@@ -115,7 +115,7 @@ sap.ui.define([
                 this.byId("idtype").setSelectedKey(oFood.type);
             
                 // Dialog 별점에는 평균이 아닌 원래 리뷰 별점을 표시
-                // originalStar는 Detail에서 평균 계산 후 생기므로, 아직 없으면 star가 원래 별점
+                // originStar는 Detail에서 평균 계산 후 생기므로, 아직 없으면 star가 원래 별점
                 this.byId("idstars").setSelectedKey(String(oFood.originStar || oFood.star));
 
                 this.byId("idrevisit").setSelectedKey(String(oFood.visit_again));
@@ -147,9 +147,8 @@ sap.ui.define([
                 this.byId("idstore").setValue(oFood.store);
                 this.byId("idtype").setSelectedKey(oFood.type);
 
-                // 수정
                 // Dialog 별점에는 평균이 아닌 원래 리뷰 별점을 표시
-                // (originalStar는 Detail에서 평균 계산 후 생기므로, 아직 없으면 star가 원래 별점)
+                // (originStar는 Detail에서 평균 계산 후 생기므로, 아직 없으면 star가 원래 별점)
                 this.byId("idstars").setSelectedKey(String(oFood.originStar || oFood.star));
 
                 this.byId("idrevisit").setSelectedKey(String(oFood.visit_again));
