@@ -36,8 +36,7 @@ sap.ui.define([
             });
         },
         onHeaderPress : function(sField) {
-            //  별점 및 추천여부에 sort 적용
-
+            //  별점 및 재방문 의사에 sort 적용
             if (this._sSortField === sField) {
                 // 같은 열을 다시 누르면 오름차순, 내림차순 전환
                 this._bDesc = !this._bDesc;
