@@ -207,7 +207,7 @@ sap.ui.define([
                 oDialog.setTitle("맛집 추가");
                 this.byId("idDialogBtn").setText("추가");
 
-                this.byId("idname").setValue("");-
+                this.byId("idname").setValue("");
                 this.byId("idstore").setValue("");
                 this.byId("idtype").setSelectedKey("");
                 this.byId("idstars").setSelectedKey("");
