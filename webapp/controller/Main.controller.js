@@ -234,44 +234,6 @@ sap.ui.define([
                 oDialog.open();
             });
         },
-        onAddDialog: function () {
-            let oDialog = this.byId("idDialog");
-
-            if (oDialog) {
-                oDialog.setTitle("맛집 추가");
-                this.byId("idDialogBtn").setText("추가");
-
-                this.byId("idname").setValue("");-
-                this.byId("idstore").setValue("");
-                this.byId("idtype").setSelectedKey("");
-                this.byId("idstars").setSelectedKey("");
-                this.byId("idrevisit").setSelectedKey("");
-                this.byId("idimgurl").setValue("");
-                this.byId("idmenu").setValue("");
-                this.byId("idprice").setValue("");
-                this.byId("idreview").setValue("");
-
-                oDialog.open();
-                return;
-            }
-
-            Fragment.load({
-                // Dialog 안 id들 앞에 Main 이름표를 붙임
-                // → Detail의 Dialog와 섞이지 않고, this.byId()로 찾을 수 있게 됨
-                id: this.getView().getId(),
-                name : "project261105.view.fragment.Dialog",
-                type : "XML",
-                controller : this,      // Dialog 버튼의 press 함수를 이 Main Controller에서 찾음
-                }).then((oDialog) => {
-                // 파일을 다 불러온 뒤에 실행되는 부분
-                // 화살표 함수(=>)라서 이 안에서도 this가 Main Controller를 가리킴
-                this.getView().addDependent(oDialog);                // Dialog를 Main 화면에 소속시킴
-                oDialog.setTitle("맛집 추가");
-                this.byId("idDialogBtn").setText("추가");
-                oDialog.open();
-            });
-        },
-
         onSaveDialogBtn: function () {
             let addName = this.byId("idname").getValue();
             let addStore = this.byId("idstore").getValue();
