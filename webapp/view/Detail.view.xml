@@ -39,24 +39,39 @@
     <headerContent>
 
         <!-- 헤더 접히는 영역: FlexBox(가로)로 정보 묶음을 나란히 배치, 각 묶음은 VBox(세로), HBox(가로) -->
-        <m:FlexBox>
+        <m:FlexBox justifyContent="SpaceBetween" alignItems="Start" width="100%">
+            
+            <m:HBox >
+                <!-- [묶음 1] 썸네일 -->
+                <core:Icon src="sap-icon://meal"
+                    size="2rem" width="4rem" height="4rem"
+                    color="#FFFFFF"
+                    backgroundColor="{= ${type} === '한식' ? '#4CAF50'
+                                    : ${type} === '중식' ? '#FF9800'
+                                    : ${type} === '일식' ? '#2196F3' : '#9C27B0' }"
+                    class="sapUiSmallMarginEnd"/>
 
-            <!-- [묶음 1] 기본 정보 -->
-            <m:VBox class = "sapUiSmallMarginEnd">
-                <m:Title text = "카테고리" />
-                <m:Text text = "{type}" />
-                <m:Text text = "{name}" />
-            </m:VBox>
+                <!-- [묶음 2] 기본 정보 -->
+                <m:VBox class = "sapUiSmallMarginEnd">
+                    <m:Label text="카테고리" design="Bold"/>
+                    <m:Text text = "{type}" />
+                    <m:Text text = "{name}" />
+                </m:VBox>
 
-            <!-- [묶음 2] 정보 -->
-            <m:VBox class = "sapUiSmallMarginEnd">
-            <m:Text text = "별점 :" />
-                <m:Text id = "TitleStarText" text="" />
-            </m:VBox>
+                <!-- [묶음 3] 정보 -->
+                <m:VBox class = "sapUiSmallMarginEnd">
+                <m:Label text="별점" design="Bold"/>
+                    <m:Text id = "TitleStarText" text="" width="200px"/>
+                </m:VBox>
+            </m:HBox>
 
-            <!-- [묶음 3] 가성비 점수 정보 --> 
-            <m:VBox class="sapUiSmallMarginEnd" alignItems="End" width="1000px">
-                <m:Label text="가성비"/>
+            <!-- [묶음 4] 가성비 점수 정보 --> 
+            <m:VBox class="sapUiSmallMarginEnd" alignItems="End" >
+                <m:HBox alignItems="Center">
+                    <m:Label text="가성비" design="Bold" class="sapUiTinyMarginEnd"/>
+                    <core:Icon src="sap-icon://hint" color="Default"
+                            tooltip="별점이 높고 가격이 저렴할수록 점수가 높아요"/>
+                </m:HBox>
                 <m:ProgressIndicator width="200px" showValue="true" 
                         percentValue="{= Math.min(100, ${star} * 2 * 100000 / ${detail/0/price}) }"
                         displayValue="{= Math.round(Math.min(100, ${star} * 2 * 100000 / ${detail/0/price})) }점"
@@ -111,9 +126,10 @@
         <!--평가 -->
         <ObjectPageSection titleUppercase="false" title="평가">
             <ObjectPageSubSection>
-                <blocks>
-					<m:Text text = "{detail/0/review}"/>
-			    </blocks>
+                <m:HBox alignItems="Start">
+                    <core:Icon src="sap-icon://feedback" size="2rem" color="#5D5D5D" class="sapUiSmallMarginEnd"/>
+                    <m:Text text="{detail/0/review}"/>
+                </m:HBox>
             </ObjectPageSubSection>
         </ObjectPageSection>
 
@@ -121,7 +137,11 @@
         <ObjectPageSection titleUppercase="false" title="재방문 의사">
             <ObjectPageSubSection>
                 <blocks>
-					<m:Text text ="{= ${visit_again} ? '있어요!!' : '없어요'}"/>
+					<m:ObjectStatus
+                        text="{= ${visit_again} ? '또 갈래요!' : '다신 안 가요' }"
+                        icon="{= ${visit_again} ? 'sap-icon://heart' : 'sap-icon://decline' }"
+                        state="{= ${visit_again} ? 'Success' : 'Error' }"
+                        inverted="true"/>
 			    </blocks>
             </ObjectPageSubSection>
         </ObjectPageSection>
@@ -144,40 +164,45 @@
         <ObjectPageSection titleUppercase="false" title="댓글 목록 ({= ${comments/length} || 0 })">
             <ObjectPageSubSection>
                 <blocks>
-                <m:VBox>
-                    <m:HBox>
-                    <m:Select id = "starRate" width="10rem" selectedKey = "5">
-                        <core:Item key="1" text="★☆☆☆☆ (1점)"/>
-                        <core:Item key="2" text="★★☆☆☆ (2점)"/>
-                        <core:Item key="3" text="★★★☆☆ (3점)"/>
-                        <core:Item key="4" text="★★★★☆ (4점)"/>
-                        <core:Item key="5" text="★★★★★ (5점)"/>
-                    </m:Select>
-                        <m:Text text = "이름 : " class="sapUiTinyMarginEnd"/>
-                        <m:Input id = "commentName" width="10rem" class="sapUiSmallMarginEnd"/>
-                        <m:Text text = "댓글 : " class="sapUiTinyMarginEnd"/>
-                        <m:Input id = "commentInput" width="20rem" class="sapUiSmallMarginEnd"/>
-                        <m:Button text = "입력 완료" press = "onCommentPress"/>
-                    </m:HBox>
-                        <m:Table  id = "commentTable" items = "{comments}">
+                    <m:VBox>
+                        <m:HBox alignItems="Center" class="sapUiSmallMarginBottom">
+                        <m:Select id = "starRate" width="10rem" selectedKey = "5" class="sapUiTinyMarginEnd">
+                            <core:Item key="1" text="★☆☆☆☆ (1점)"/>
+                            <core:Item key="2" text="★★☆☆☆ (2점)"/>
+                            <core:Item key="3" text="★★★☆☆ (3점)"/>
+                            <core:Item key="4" text="★★★★☆ (4점)"/>
+                            <core:Item key="5" text="★★★★★ (5점)"/>
+                        </m:Select>
+                            <m:Input id="commentName" width="8rem" placeholder="닉네임"/> 
+                            <m:Input id="commentInput" width="20rem" placeholder="댓글을 입력하세요" class="sapUiTinyMarginEnd"/>
+                            <m:Button text="등록" icon="sap-icon://paper-plane" type="Emphasized" press="onCommentPress"/>
+                        </m:HBox >
+                        <m:Table id="commentTable" items="{comments}" noDataText="아직 댓글이 없어요. 첫 댓글을 남겨주세요!" alternateRowColors="true" mode = "Delete" delete = "onCommentDelete">                                               <!-- 🔧 (I) -->
                             <m:columns>
-                                <m:Column><m:Text text ="별점" /></m:Column>
-                                <m:Column><m:Text text ="닉네임" /></m:Column>
-                                <m:Column><m:Text text ="댓글" /></m:Column>
+                                <m:Column width="10rem"><m:Text text="별점" /></m:Column>                  <!-- 🔧 (J) -->
+                                <m:Column width="10rem"><m:Text text="닉네임" /></m:Column>                <!-- 🔧 (J) -->
+                                <m:Column><m:Text text="댓글" /></m:Column>                                <!-- 그대로 -->
+                                <m:Column width="6rem"><m:Text text="작성날짜" /></m:Column>
+                                <m:Column width="5rem"><m:Text text="작성시간" /></m:Column>
                             </m:columns>
-                    <m:items>
-					<m:ColumnListItem>
-						<m:cells>
-							<!--ObjectIdentifier title="{food>Name}" Link="ddddd" /-->
-							<m:Text text="{
-							   path : 'CommentStar',
-                       		   formatter : '.formatter.starNumber'
-							}" />
-                            <m:Text text="{name}" />
-                            <m:Text text="{comment}" />                         
-						</m:cells>
-					</m:ColumnListItem>
-				    </m:items>
+                            <m:items>
+                                <m:ColumnListItem>
+                                    <m:cells>
+                                        <!--ObjectIdentifier title="{food>Name}" Link="ddddd" /-->
+                                        <m:Text text="{
+                                        path : 'CommentStar',
+                                        formatter : '.formatter.starNumber'
+                                        }" />
+                                        <m:HBox alignItems="Center">
+                                            <core:Icon src="sap-icon://customer" size="1.2rem" color="Neutral" class="sapUiTinyMarginEnd"/>
+                                            <m:Text text="{name}" />
+                                        </m:HBox>
+                                        <m:Text text="{comment}" />
+                                        <m:Text text="{date}" />   
+                                        <m:Text text="{time}" />                     
+                                    </m:cells>
+                                </m:ColumnListItem>
+                            </m:items>
                         </m:Table>
                     </m:VBox>
 	            </blocks>

@@ -14,10 +14,10 @@
 					<core:Title text="음식 정보" />
 
 					<Label text="먹었던 음식" />
-					<Input id="idname" value="{/name}" width="200px" placeholder="Ex) 햄버거" />
+					<Input id="idname" value="{/name}" width="350px" placeholder="Ex) 햄버거" />
 
 					<Label text="음식점 상호명" />
-					<Input id="idstore" value="{/store}" width="200px" placeholder="Ex) 맥도날드 구로디지털단지역점" />
+					<Input id="idstore" value="{/store}" width="350px" placeholder="Ex) 맥도날드 구로디지털단지역점" />
 
 					<Label text="분류" />
 					<Select id="idtype" forceSelection="false" width="200px" >
@@ -54,13 +54,13 @@
 					<core:Title text="세부사항" />
 
 					<Label text="메뉴" />
-					<Input id="idmenu" value="{edit>/age}" width="200px" placeholder="Ex) 베이컨 토마토 디럭스 세트"/>
+					<Input id="idmenu" value="{edit>/age}" width="350px" placeholder="Ex) 베이컨 토마토 디럭스 세트"/>
 
 					<Label text="가격" />
-					<Input id="idprice" value="{edit>/grade_level}" width="200px" placeholder="숫자만 입력해주세요 Ex) 8700 "/>
+					<Input id="idprice" value="{edit>/grade_level}" type="Number" width="350px" placeholder="숫자만 입력해주세요 Ex) 8700 "/>
 
 					<Label text="후기" />
-					<TextArea id="idreview" value="{edit>/grade_level}" width="400px" height="100px" placeholder="Ex) 내부가 협소하고 시끄럽다... 매장 청결관리가 잘 되어있다..."/>
+					<TextArea id="idreview" value="{edit>/grade_level}" width="400px" height="100px" placeholder="Ex) 내부가 협소하고 시끄럽다... 맵기가 적당하다..."/>
 
 				</f:content>
 			</f:SimpleForm>

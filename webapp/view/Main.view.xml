@@ -30,11 +30,10 @@
 				<headerToolbar>
 					<OverflowToolbar>
 						<SearchField placeholder="메뉴 또는 상호 검색" search=".onSearch" width="15rem"/>
-						<ToolbarSpacer/>
 						<Button text="랜덤 뽑기" type="Emphasized" icon="sap-icon://synchronize" press=".onRandom" />
 						<ToolbarSpacer/>
-						<Button text="데이터 추가" type="Accept" press="onAddDialog" />
-						<Button text="데이터 삭제" type="Reject" press=".onDelete" />
+						<Button text="데이터 추가" type="Accept" icon="sap-icon://add" press="onAddDialog" />
+						<Button text="데이터 삭제" type="Reject" icon="sap-icon://delete" press=".onDelete" />
 					</OverflowToolbar>	
 				</headerToolbar>
 				<columns>
@@ -44,7 +43,7 @@
 					<Column	hAlign="Center">
 						<Text text="상호" />
 					</Column>
-					<Column	hAlign="Center">
+					<Column	hAlign="Center" width="8rem">
 						<HBox justifyContent="End" alignItems="Center">
 						<Text text="종류" />
 						<Button icon="sap-icon://filter" type="Transparent"
@@ -58,7 +57,7 @@
                				    press=".onHeaderPress('star')"/>
     					</HBox>
 					</Column>
-					<Column	hAlign="Center">
+					<Column	hAlign="Center" width="8rem">
 						<HBox justifyContent="End" alignItems="Center">
 						<Text text="추천 여부" />
 						<Button icon="sap-icon://sort" type="Transparent"
@@ -73,9 +72,15 @@
 					<ColumnListItem type="Navigation">
 						<cells>
 							<!--ObjectIdentifier title="{food>Name}" Link="ddddd" /-->
-							<Text text="{name}" />
+							<ObjectIdentifier title="{name}" />
                             <Text text="{store}" />
-                            <Text text="{type}" />
+                            <HBox alignItems="Center" justifyContent="Center">
+								<core:Icon src="sap-icon://meal" size="1rem" class="sapUiTinyMarginEnd"
+									color="{= ${type} === '한식' ? '#4CAF50'
+											: ${type} === '중식' ? '#FF9800'
+											: ${type} === '일식' ? '#2196F3' : '#9C27B0' }"/>
+								<Text text="{type}" />
+							</HBox>
 							<Text text="{
 							   path : 'star',
                        		   formatter : '.formatter.starNumber'
@@ -83,7 +88,7 @@
 							<core:Icon src="{=${visit_again} === true ? 'sap-icon://thumb-up' : 'sap-icon://thumb-down' }"
                                		 color="{=${visit_again} === true ? '#2F9D27' : '#FF0000'}"
                       		/>
-                            <Button text="지도 보기" type="Default" icon="sap-icon://map" press=".onOpenMap" />                         
+                            <Button text="지도 보기" type="Ghost" icon="sap-icon://map" press=".onOpenMap" />                         
 						</cells>
 					</ColumnListItem>
 				</items>
