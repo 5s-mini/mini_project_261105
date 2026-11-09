@@ -202,6 +202,7 @@ sap.ui.define([
         onAddDialog: function () {
             let oDialog = this.byId("idDialog");
 
+            // oDialog가 true이면 제목과 버튼 텍스트 세팅, 입력값 빈값으로 세팅 (Dialog를 두번째부터 열때에는 Dialog가 처음 열었을 때에 입력된 값으로 되어있으므로.)
             if (oDialog) {
                 oDialog.setTitle("맛집 추가");
                 this.byId("idDialogBtn").setText("추가");
@@ -220,17 +221,12 @@ sap.ui.define([
                 return;
             }
 
-            Fragment.load({
-                // Dialog 안 id들 앞에 Main 이름표를 붙임
-                // → Detail의 Dialog와 섞이지 않고, this.byId()로 찾을 수 있게 됨
-                id: this.getView().getId(),
-                name : "project261105.view.fragment.Dialog",
-                type : "XML",
-                controller : this,      // Dialog 버튼의 press 함수를 이 Main Controller에서 찾음
-                }).then((oDialog) => {
-                // 파일을 다 불러온 뒤에 실행되는 부분
-                // 화살표 함수(=>)라서 이 안에서도 this가 Main Controller를 가리킴
-                this.getView().addDependent(oDialog);                // Dialog를 Main 화면에 소속시킴
+            // oDialog가 false이면 Dialog 파일 로드 후 제목과 버튼 텍스트 세팅
+            this.loadFragment({
+                name: "project261105.view.fragment.Dialog"
+            }).then((oDialog) => {
+                // 화살표 함수(=>)라서 이 안에서도 this가 Main controller를 가리킴
+
                 oDialog.setTitle("맛집 추가");
                 this.byId("idDialogBtn").setText("추가");
                 oDialog.open();

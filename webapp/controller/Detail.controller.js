@@ -95,11 +95,7 @@ sap.ui.define([
                     
 
         },
-
-        onEditBtn() {
-
-            // 저장할 때 덮어쓸 위치 (예: "/food/3")
-            this.sPath = this.getView().getBindingContext().getPath();
+onEditBtn() {
 
             // 지금 화면에 보이는 맛집 데이터 {name: '구내식당', store: '모르겠음', type: '한식', star: 2, visit_again: true, …}
             let oFood = this.getView().getBindingContext().getObject();     
@@ -128,21 +124,14 @@ sap.ui.define([
                 return;
             }
 
-            // Dialog가 없으면: 처음 만들고, 제목, 버튼 글자 바꾸고 Input 채우고 열기
-            Fragment.load({
-                id: this.getView().getId(),
-                // Dialog 안 id들 앞에 Detail 이름표를 붙임
-                // => Main의 Dialog와 섞이지 않고, this.byId()로 찾을 수 있게 됨
-                name: "project261105.view.fragment.Dialog",
-                type: "XML",
-                controller: this        // Dialog의 이벤트 함수를 이 Detail Controller에서 찾음
-            }).then((oDialog) => {
-                // 파일을 다 불러온 뒤에 실행되는 부분
-                // 화살표 함수(=>)라서 이 안에서도 this가 Detail Controller를 가리킴                            
-                this.getView().addDependent(oDialog);           // => Dialog를 Detail 화면에 소속시킴
+            // Dialog가 없으면: 처음 만들고, 제목, 버튼 글자 바꾸고 입력값 채우고 열기
+            this.loadFragment({
+                name: "project261105.view.fragment.Dialog"
+            }).then((oDialog) => { 
+                // 화살표 함수(=>)라서 이 안에서도 this가 Main controller를 가리킴
+
                 oDialog.setTitle("맛집 수정");
                 this.byId("idDialogBtn").setText("저장");
-
                 this.byId("idname").setValue(oFood.name);
                 this.byId("idstore").setValue(oFood.store);
                 this.byId("idtype").setSelectedKey(oFood.type);
@@ -162,6 +151,11 @@ sap.ui.define([
         },
 
         onSaveDialogBtn() {
+
+            // 저장할 때 덮어쓸 위치 구하기 (예: "/food/3")
+            // Detail View에 연결된 맛집 데이터 정보에서 주소(경로)를 this.sPath에 저장
+            this.sPath = this.getView().getBindingContext().getPath();
+        
 
             // Input에 입력된(수정된) 값 꺼내기
             let editName = this.byId("idname").getValue();
@@ -200,18 +194,18 @@ sap.ui.define([
             };
 
             //리뷰 수정 시 댓글이 지워지는 현상 fix
-            const oOldFood = this.getView().getModel().getProperty(this.sPath);
-            oEditFood.comments = oOldFood.comments || [];   //수정 전 모델에서 댓글 배열을 가져와서 댓글 유지, 없으면 빈 배열
+            // const oOldFood = this.getView().getModel().getProperty(this.sPath);
+            // oEditFood.comments = oOldFood.comments || [];   //수정 전 모델에서 댓글 배열을 가져와서 댓글 유지, 없으면 빈 배열
 
-            // onEditBtn에서 저장해둔 위치("/food/3")의 데이터를 새 데이터로 덮어씀
+            // 위에서 구한 위치("/food/3")의 데이터를 새 데이터로 덮어씀 
             // → 화면이 이 위치에 연결되어 있어서 Detail 화면과 Main 목록이 자동으로 바뀜
             this.getView().getModel().setProperty(this.sPath, oEditFood);
 
             // 안내 메시지 띄우고 Dialog 닫기
             MessageToast.show("맛집 정보가 수정되었습니다.");
 
-            // Dialog에서 별점 수정되면 별점 평균에 반영
-            this.onStarMean();
+            // // Dialog에서 별점 수정되면 별점 평균에 반영
+            // this.onStarMean();
 
             this.onCloseDialogBtn();
         },
