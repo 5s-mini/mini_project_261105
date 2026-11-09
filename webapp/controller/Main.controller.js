@@ -16,22 +16,28 @@ sap.ui.define([
         formatter: formatter,
 
         onInit() {
-             // 종류 선택 목록용 모델 (처음엔 빈 목록)
+            // Main Model manifest.json 내 등록 (data.json)
+
+            // 종류 선택 목록용 임시 모델 (처음엔 빈 목록)
             this.getView().setModel(new JSONModel({ types: [] }), "typeList");
         },
         onListItemPress(oEvent) {
-            // 선택한 행의 경로 가져오기
+            // 리스트 누르면 Detail Page로 파라미터 넘겨주며 화면 전환 (routing)
+
+            // 1. 선택한 행의 경로 가져오기
             const sPath = oEvent.getParameter("listItem").getBindingContext().getPath(); // "/food/3"
 
-            // 행 번호만 가져오기
+            // 2. (파라미터용) 행 번호만 가져오기
             const sFoodId = sPath.split("/").pop();
 
-            // Detail 페이지 주소 지정
+            // 3. 파라미터와 함께 Datail Page로 전환 
             this.getOwnerComponent().getRouter().navTo("RouteDetail", {
                 paramId: sFoodId
             });
         },
         onHeaderPress : function(sField) {
+            //  별점 및 추천여부에 sort 적용
+
             if (this._sSortField === sField) {
                 // 같은 열을 다시 누르면 오름차순, 내림차순 전환
                 this._bDesc = !this._bDesc;
@@ -56,36 +62,43 @@ sap.ui.define([
             this.byId("productsTable").getBinding("items").sort(aSorters);
         },
         onFilter : function (oEvent) {
-            let oButton = oEvent.getSource();    // 누른 필터 버튼
+            // Popover내 적용할 필터 종류 만들기
 
-            // ===== 1) 종류 목록 만들기 (방법 A) =====
-            let aFood = this.getView().getModel().getProperty("/food");
-            let aNames = [];                                    // 글자만 모으는 배열
+            let oButton = oEvent.getSource();    // 누른 필터 버튼 (popover 호출용)
 
+            // 1. Filter 종류 목록 만들기
+            let aFood = this.getView().getModel().getProperty("/food"); // data 전부
+            let aNames = [];                                    // 글자만 모으는 빈배열
+
+            // 1-1) 값이 비어있지 않고 아직 배열 내 없으면 빈배열에 추가
             for (let i = 0; i < aFood.length; i++) {
-                let sType = aFood[i].type.trim();
-                if (sType !== "" && !aNames.includes(sType)) {  // 아직 없으면 추가
+                let sType = aFood[i].type.trim();     // 객체별 type 순환
+                if (sType !== "" && !aNames.includes(sType)) {  
                     aNames.push(sType);
-                }
+                }           // ** includes 배열에 값있으면 true 없으면 false
             }
 
-            let aTypes = [{ key: "", text: "전체" }];           // Select용 목록
+            // 1-2) Model 추가용 배열 만들기
+            let aTypes = [{ key: "", text: "전체" }];    // Filter용 목록 (첫 항목 필터 미적용 전체)
             for (let i = 0; i < aNames.length; i++) {
                 aTypes.push({ key: aNames[i], text: aNames[i] });
             }
             this.getView().getModel("typeList").setProperty("/types", aTypes);
+            // 만들어진 배열 이전 만든 빈 모델에 넣기
 
-            // ===== 2) Popover 열기 (그대로) =====
-            if (!this._pTypePopover) {
-                this._pTypePopover = this.loadFragment({
+            // 2. Popover 열기 (Dialog와 동일한 방법)
+            if (!this._pPopover) {
+                this._pPopover = this.loadFragment({
                     name: "project261105.view.fragment.Filter"
                 });
             }
-            this._pTypePopover.then(function (oPopover) {
+            this._pPopover.then(function (oPopover) {
                 oPopover.openBy(oButton);
-            });
+            });  // open이 아니라 어떤 컨트롤에 붙어서 나오는 것이기 때문에 openby 사용 
         },
         onTypeSelect : function (oEvent) {
+            // Popover에서 종류를 누르면 table에 적용하기
+
             // 1. Select에서 고른 종류의 key ("" = 전체, "한식" 등)
             let sKey = oEvent.getSource().getSelectedKey();
 
@@ -101,7 +114,7 @@ sap.ui.define([
         onSearch: function (oEvent) {
             // 1. 검색어를 기억해 두기
             this._sQuery = oEvent.getParameter("query");
-
+            
             // 2. 검색어와 종류를 함께 적용
             this._applyFilters();
         },
@@ -221,44 +234,6 @@ sap.ui.define([
                 oDialog.open();
             });
         },
-        onAddDialog: function () {
-            let oDialog = this.byId("idDialog");
-
-            if (oDialog) {
-                oDialog.setTitle("맛집 추가");
-                this.byId("idDialogBtn").setText("추가");
-
-                this.byId("idname").setValue("");-
-                this.byId("idstore").setValue("");
-                this.byId("idtype").setSelectedKey("");
-                this.byId("idstars").setSelectedKey("");
-                this.byId("idrevisit").setSelectedKey("");
-                this.byId("idimgurl").setValue("");
-                this.byId("idmenu").setValue("");
-                this.byId("idprice").setValue("");
-                this.byId("idreview").setValue("");
-
-                oDialog.open();
-                return;
-            }
-
-            Fragment.load({
-                // Dialog 안 id들 앞에 Main 이름표를 붙임
-                // → Detail의 Dialog와 섞이지 않고, this.byId()로 찾을 수 있게 됨
-                id: this.getView().getId(),
-                name : "project261105.view.fragment.Dialog",
-                type : "XML",
-                controller : this,      // Dialog 버튼의 press 함수를 이 Main Controller에서 찾음
-                }).then((oDialog) => {
-                // 파일을 다 불러온 뒤에 실행되는 부분
-                // 화살표 함수(=>)라서 이 안에서도 this가 Main Controller를 가리킴
-                this.getView().addDependent(oDialog);                // Dialog를 Main 화면에 소속시킴
-                oDialog.setTitle("맛집 추가");
-                this.byId("idDialogBtn").setText("추가");
-                oDialog.open();
-            });
-        },
-
         onSaveDialogBtn: function () {
             let addName = this.byId("idname").getValue();
             let addStore = this.byId("idstore").getValue();
@@ -311,33 +286,36 @@ sap.ui.define([
         },
         
         onDelete : function() {
+            // 메인 뷰 내 식당 리스트 삭제
+
+            // 1. Table 지정 및 SelectItems 정보 파악
             let oTable = this.byId("productsTable");
             let aSelect = oTable.getSelectedItems();   // [[0]{}, [4]{}, [5]{}]
 
-            // 체크 안하면 에러메시지 나
+            // 1-1) 삭제행 체크 안하면 에러메시지 나게
             // 복수(getSelectedItems)일때는 빈 배열(!aSelect)은 참이기 때문에 항상 false가 되므로 length로 확인
             if(aSelect.length === 0){      
                 sap.m.MessageToast.show("삭제할 행을 선택하세요.");
                 return;
             }
-            // 1. 선택행 위치 번호 배열안에 모으기
-            let aIndx = [];     // for문의 결과는 [1,3,7] 이렇게 쌓임
+            // 1-2) 선택행 위치 번호 배열안에 모으기
+            let aIndx = [];     // for문의 결과는 [0,4,5] 이렇게 쌓임
             for(let i=0; i < aSelect.length ; i++){
-                let sPath = aSelect[i].getBindingContext().getPath();  // ex. /food/1
+                let sPath = aSelect[i].getBindingContext().getPath();  // ex. /food/4
                 aIndx.push(Number(sPath.split("/").pop()))
             }
 
             // 2. 삭제할 번호 외의 객체만 남김
             let oModel = this.getView().getModel();
             let aFood = oModel.getProperty("/food");
-            let aNew = aFood.filter((o, idx) => !aIndx.includes(idx));
+            let aNew = aFood.filter((o, idx) => !aIndx.includes(idx)); // 삭제 제외 모델데이터 만들기
                 // includes (배열에 값이 있으면 true, 없으면 false) aIndx 값 돌리기
                 // filter (객체, 번호) (food 모델 내 객체를 보며 false인거만 골라줌)
 
 
             // 3. 새로 만든 객체 배열 모델에 넣고 체크 해제
             oModel.setProperty("/food", aNew)
-            oTable.removeSelections(true);  // 선택한 항목 해제하는 함수
+            oTable.removeSelections(true);  // ** .removeSelections 선택한 항목 해제하는 함수
             sap.m.MessageToast.show("삭제했습니다.");
         }
     });

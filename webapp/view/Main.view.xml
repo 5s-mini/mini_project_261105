@@ -59,7 +59,7 @@
 					</Column>
 					<Column	hAlign="Center" width="8rem">
 						<HBox justifyContent="End" alignItems="Center">
-						<Text text="추천 여부" />
+						<Text text="재방문 의사" />
 						<Button icon="sap-icon://sort" type="Transparent"
                				    press=".onHeaderPress('visit_again')"/>
     					</HBox>
