@@ -85,9 +85,11 @@
 							   path : 'star',
                        		   formatter : '.formatter.starNumber'
 							}" />
-							<core:Icon src="{=${visit_again} === true ? 'sap-icon://thumb-up' : 'sap-icon://thumb-down' }"
-                               		 color="{=${visit_again} === true ? '#2F9D27' : '#FF0000'}"
-                      		/>
+							<ObjectStatus
+								text="{= ${visit_again} ? '또 갈래요!' : '다신 안 가요' }"
+								icon="{= ${visit_again} ? 'sap-icon://heart' : 'sap-icon://decline' }"
+								state="{= ${visit_again} ? 'Success' : 'Error' }"
+								inverted="true"/>
                             <Button text="지도 보기" type="Ghost" icon="sap-icon://map" press=".onOpenMap" />                         
 						</cells>
 					</ColumnListItem>
