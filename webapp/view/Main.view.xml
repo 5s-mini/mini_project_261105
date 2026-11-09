@@ -83,7 +83,7 @@
 							<core:Icon src="{=${visit_again} === true ? 'sap-icon://thumb-up' : 'sap-icon://thumb-down' }"
                                		 color="{=${visit_again} === true ? '#2F9D27' : '#FF0000'}"
                       		/>
-                            <Button text="지도 보기" type="Accept" icon="sap-icon://map" press=".onOpenMap" />                         
+                            <Button text="지도 보기" type="Default" icon="sap-icon://map" press=".onOpenMap" />                         
 						</cells>
 					</ColumnListItem>
 				</items>
