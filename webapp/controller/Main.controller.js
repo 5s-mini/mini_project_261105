@@ -36,7 +36,7 @@ sap.ui.define([
             });
         },
         onHeaderPress : function(sField) {
-            //  별점 및 재방문 의사에 sort 적용
+            // 별점 및 재방문 의사에 sort 적용
             if (this._sSortField === sField) {
                 // 같은 열을 다시 누르면 오름차순, 내림차순 전환
                 this._bDesc = !this._bDesc;
@@ -118,12 +118,15 @@ sap.ui.define([
             this._applyFilters();
         },
         _applyFilters: function (oEvent) {
-            // filter 배열 설정, data.json의 name(메뉴명) 속성값이 sQuery와 일치 여부를 검사하는 oFilter 선언
+            // filter 배열 선언, 입력값 sQuery 및 종류 sType 설정
             let aFilters = [];
             let sQuery = this._sQuery;
             let sType = this._sType;
-            let oNameFilter = new Filter("name", FilterOperator.Contains, sQuery),
-                oStoreFilter = new Filter("store", FilterOperator.Contains, sQuery);
+
+            // data.json의 name(메뉴명) 속성값이 sQuery와 일치 여부를 검사하는 oNameFilter 선언
+            let oNameFilter = new Filter("name", FilterOperator.Contains, sQuery);
+            // data.json의 store(상호명) 속성값이 sQuery와 일치 여부를 검사하는 oStoreFilter 선언
+            let oStoreFilter = new Filter("store", FilterOperator.Contains, sQuery);
 
             // sQuery가 존재할 경우 필터 적용
 			if (sQuery) {
@@ -142,7 +145,7 @@ sap.ui.define([
             let oTable = this.getView().byId("productsTable");
 
             if (aFilters.length > 0) {
-                // Table에 필터를 이중으로 적용하기 (AND)
+                // 검색 조건과 종류 조건을 AND로 묶어 Table에 한 번에 적용
                 oTable.getBinding("items").filter(new Filter({
                     filters: aFilters,
                     and: true
